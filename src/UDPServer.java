@@ -7,6 +7,8 @@ import java.io.ByteArrayInputStream;
 import java.net.*;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
+import java.time.LocalTime;
+
 
 public class UDPServer {
     public static void main(String[] args) {
@@ -80,12 +82,16 @@ public class UDPServer {
 
 
                                 fillOrder(node.getAttributes().item(j).toString(), order);
+
+
                             }
 
                         }
                     }
 
                     order.printOrder();
+                    LocalTime currentTime = LocalTime.now();
+                    System.out.println("The current time is: " + currentTime);
 
 
                 } catch (Exception e) {
