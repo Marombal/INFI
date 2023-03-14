@@ -1,52 +1,39 @@
 public class Order {
-    private int Quantity;
-    private int WorkPiece;
-    private int OrderNumber;
-    private int DueDate;
-    private int LatePen;
-    private int EarlyPen;
-    String Client;
+    private String Quantity;
+    private String WorkPiece;
+    private String OrderNumber;
+    private String DueDate;
+    private String LatePen;
+    private String EarlyPen;
+    private String Client;
 
     Order(){}
 
-    Order(int quantity,
-          int workPiece,
-          int orderNumber,
-          int dueDate,
-          int latePen,
-          int earlyPen){
-
+    public void setQuantity(String quantity) {
         Quantity = quantity;
+    }
+
+    public void setWorkPiece(String workPiece) {
         WorkPiece = workPiece;
+    }
+
+    public void setOrderNumber(String orderNumber) {
         OrderNumber = orderNumber;
+    }
+
+    public void setDueDate(String dueDate) {
         DueDate = dueDate;
-        LatePen = latePen;
+    }
+
+    public void setEarlyPen(String earlyPen) {
         EarlyPen = earlyPen;
-
     }
 
-    void setQuantity(int q){
-        Quantity = q;
+    public void setLatePen(String latePen) {
+        LatePen = latePen;
     }
 
-    void setWorkPiece(int w){
-        WorkPiece = w;
+    public void printOrder(){
+        System.out.println(OrderNumber + Quantity + WorkPiece);
     }
-
-    void setOrderNumber(int o){
-        OrderNumber = o;
-    }
-
-    void setDueDate(int d){
-        DueDate = d;
-    }
-
-    void setLatePen(int l){
-        LatePen = l;
-    }
-
-    void setEarlyPen(int e){
-        EarlyPen = e;
-    }
-
 }

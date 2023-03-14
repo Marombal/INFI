@@ -33,7 +33,7 @@ public class UDPServer {
 
                 // Convert the packet data to a String
                 String message = new String(packet.getData(), 0, packet.getLength());
-                System.out.println("Received data: " + message);
+                // System.out.println("Received data: " + message); // DEBUG
 
                 /* Saves Received data as XML file */
                 String fileName = "Order.xml";
@@ -61,7 +61,7 @@ public class UDPServer {
                     // Get a list of all elements in the document
                     NodeList nodeList = doc.getDocumentElement().getChildNodes();
 
-                    System.out.println("Parsed to:");
+                    // System.out.println("Parsed to:"); // DEBUG
 
                     Order order = new Order();
                     //System.out.println(doc.getDocumentElement().getAttributes());
@@ -70,17 +70,24 @@ public class UDPServer {
                     for (int i = 0; i < nodeList.getLength(); i++) {
                         Node node = nodeList.item(i);
                         if (node.getNodeType() == Node.ELEMENT_NODE) {
-                            System.out.println(node.getNodeName() + ": " + node.getTextContent());
+                            // System.out.println(node.getNodeName() + ": " + node.getTextContent()); // DEBUG
 
                             int NumberOfAttributes = node.getAttributes().getLength();
 
                             for(int j = 0; j < NumberOfAttributes; j++){
-                                System.out.println("Attributes ->  " + node.getAttributes().item(j));
-                                System.out.println(extractIntFromQuotes(node.getAttributes().item(j).toString()));
+                                // System.out.println("Attributes ->  " + node.getAttributes().item(j)); // DEBUG
+                                // System.out.println(extractStringFromQuotes(node.getAttributes().item(j).toString())); // DEBUG
+
+
+                                fillOrder(node.getAttributes().item(j).toString(), order);
                             }
 
                         }
                     }
+
+                    order.printOrder();
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -104,6 +111,55 @@ public class UDPServer {
         int endIndex = str.lastIndexOf('"');
         String numString = str.substring(startIndex, endIndex);
         return Integer.parseInt(numString);
+    }
+
+    public static String extractStringFromQuotes(String str) {
+        int startIndex = str.indexOf('"') + 1;
+        int endIndex = str.lastIndexOf('"');
+        String extractedString = str.substring(startIndex, endIndex);
+        return extractedString;
+    }
+
+    /*
+    * fillOrder
+    * find what type of attributes had in the "str"
+    * adds the respective attribute to the class order
+    * */
+    public static void fillOrder(String str, Order order){
+        //str can be from all types of attributes, find what type it is and add to that type
+
+        /* checks if it is the order Number */
+        if(hasSubstring(str, "Number")){
+            order.setOrderNumber(extractStringFromQuotes(str));
+        }
+
+        /* checks if it is the order WorkPiece */
+        else if(hasSubstring(str, "WorkPiece")){
+            order.setWorkPiece(extractStringFromQuotes(str));
+        }
+
+        /* checks if it is the order Quantity */
+        else if(hasSubstring(str, "Quantity")){
+            order.setQuantity(extractStringFromQuotes(str));
+        }
+
+        /* checks if it is the order DueDate */
+        else if(hasSubstring(str, "DueDate")){
+            order.setDueDate(extractStringFromQuotes(str));
+        }
+
+        /* checks if it is the order LatePen */
+        else if(hasSubstring(str, "LatePen")){
+            order.setLatePen(extractStringFromQuotes(str));
+        }
+
+        /* checks if it is the order EarlyPen */
+        else if(hasSubstring(str, "EarlyPen")){
+            order.setEarlyPen(extractStringFromQuotes(str));
+        }
+    }
+    public static boolean hasSubstring(String str, String subStr) {
+        return str.contains(subStr);
     }
 
 }
