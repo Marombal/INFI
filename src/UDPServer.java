@@ -62,16 +62,30 @@ public class UDPServer {
                     NodeList nodeList = doc.getDocumentElement().getChildNodes();
 
                     System.out.println("Parsed to:");
+
+                    Order order = new Order();
+                    //System.out.println(doc.getDocumentElement().getAttributes());
+
                     // Print the text content of each element
                     for (int i = 0; i < nodeList.getLength(); i++) {
                         Node node = nodeList.item(i);
                         if (node.getNodeType() == Node.ELEMENT_NODE) {
                             System.out.println(node.getNodeName() + ": " + node.getTextContent());
+
+                            int NumberOfAttributes = node.getAttributes().getLength();
+
+                            for(int j = 0; j < NumberOfAttributes; j++){
+                                System.out.println("Attributes ->  " + node.getAttributes().item(j));
+                                System.out.println(extractIntFromQuotes(node.getAttributes().item(j).toString()));
+                            }
+
                         }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+
 
             }
         } catch (Exception e) {
@@ -83,4 +97,13 @@ public class UDPServer {
             }
         }
     }
+
+
+    public static int extractIntFromQuotes(String str) {
+        int startIndex = str.indexOf('"') + 1;
+        int endIndex = str.lastIndexOf('"');
+        String numString = str.substring(startIndex, endIndex);
+        return Integer.parseInt(numString);
+    }
+
 }
