@@ -45,7 +45,7 @@ public class Order {
 
     public void processOrder(){
 
-        int time;
+        int time, days;
         int numberOfTransformations;
         String tool;
 
@@ -58,20 +58,24 @@ public class Order {
         else if(Objects.equals(WorkPiece, "P3")){
             // P2 - t2/10s -> P3
             time = 10 * Integer.parseInt(Quantity);
+            days = time / 60 + 1;
             tool = "T2";
 
             System.out.println("Raw material needed: P2, quantity: " + Quantity);
             System.out.println("Transformations: P2 to P3 using " + tool);
-            System.out.println("Total time in machines: " + time);
+            System.out.println("Total time in machines: " + time + " seconds. (at least " + days + " days to complete)");
+
+
         }
         else if(Objects.equals(WorkPiece, "P4")){
             // P2 - t3/10s -> P4
             time = 10 * Integer.parseInt(Quantity);
+            days = time / 60 + 1;
             tool = "T3";
 
             System.out.println("Raw material needed: P2, quantity: " + Quantity);
             System.out.println("Transformations: P2 to P4 using " + tool);
-            System.out.println("Total time in machines: " + time);
+            System.out.println("Total time in machines: " + time + " seconds. (at least " + days + " days to complete)");
         }
         else if(Objects.equals(WorkPiece, "P5")){
             // P2 - t3/10s -> P4 - t4/10s -> P7 - t3/20s -> P9 - t4/15s -> P5
