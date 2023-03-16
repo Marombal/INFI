@@ -83,7 +83,7 @@ public class UDPServer {
 
                                 fillOrder(node.getAttributes().item(j).toString(), order);
 
-
+                                DataBase.readOrder();
                             }
 
                         }
