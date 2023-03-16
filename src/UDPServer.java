@@ -11,6 +11,9 @@ import java.time.LocalTime;
 
 
 public class UDPServer {
+
+    static MPS mps = new MPS();
+
     public static void main(String[] args) {
         DatagramSocket socket = null;
         DatagramPacket packet = null;
@@ -102,6 +105,11 @@ public class UDPServer {
                     // DataBase.updateStock("P1", 0);
                     // System.out.println(DataBase.getStock("P1"));
                     */
+                    mps.addOrder(order);
+                    System.out.println(mps.numberOfOrders());
+                    mps.printOrders();
+
+                    order.processOrder();
 
                 } catch (Exception e) {
                     e.printStackTrace();

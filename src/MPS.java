@@ -6,9 +6,33 @@
 * • the capacity used in each warehouse
 *
 * */
+
+import java.util.ArrayList;
+import java.util.List;
 public class MPS {
 
     String Number, PieceInitial, PieceFinal, Quantity;
+
+    private List<Order> orders = new ArrayList<>();
+
+    public void addOrder(Order e){
+        if(e!=null)
+            orders.add(e);
+    }
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public int numberOfOrders(){
+        return orders.size();
+    }
+
+    public void printOrders(){
+        for(Order order : orders){
+            order.printOrder();
+        }
+    }
+
     public void sendTodayMPS(){
         String msg = "!" + Number + PieceInitial + PieceFinal + Quantity;
     }
