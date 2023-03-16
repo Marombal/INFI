@@ -71,6 +71,45 @@ public class DataBase {
         }
 
         return 1;
-
     }
+
+    public static int updateStock(String WorkPiece, int Quantity){
+        numberOfDataBaseQuerys++;
+        // Connect to the DBMS (DataBase Management Server)
+        String query = "UPDATE infi.stock " + "SET quantity = '" + Quantity + "' " + "WHERE workpiece = '" + WorkPiece + "';";
+
+        try(Connection conn = DriverManager.getConnection(db_url, db_user, passwd);) {
+
+            Statement stmt = conn.createStatement();
+            int res = stmt.executeUpdate(query);
+
+            if(res == 0 ) return 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+
+        return 1;
+    }
+
+    public static int getStock(String WorkPiece){
+        numberOfDataBaseQuerys++;
+        String query  = "SELECT quantity FROM infi.stock WHERE workpiece = '" + WorkPiece + "';";
+        // Connect to the DBMS (DataBase Management Server)
+        try(Connection conn = DriverManager.getConnection(db_url, db_user, passwd);
+            // Execute an SQL statement
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);) {
+            // Analyse the resulting data
+            while (rs.next()) {
+                return rs.getInt("quantity");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+        return -1;
+    }
+
 }

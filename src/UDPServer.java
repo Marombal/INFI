@@ -94,9 +94,14 @@ public class UDPServer {
                     System.out.println("The current time is: " + currentTime);
 
                     DataBase.readOrder();
-                    // DataBase.insertOrder("Pan", "000", "P4", "00", "00", "00", "00");
-                    DataBase.updateOrder("000", true);
 
+                    /*
+                    // DataBase.insertOrder("Pan", "000", "P4", "00", "00", "00", "00");
+                    // DataBase.updateOrder("000", true);
+                    // System.out.println(DataBase.getStock("P1"));
+                    // DataBase.updateStock("P1", 0);
+                    // System.out.println(DataBase.getStock("P1"));
+                    */
 
                 } catch (Exception e) {
                     e.printStackTrace();
