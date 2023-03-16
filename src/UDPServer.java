@@ -83,7 +83,7 @@ public class UDPServer {
 
                                 fillOrder(node.getAttributes().item(j).toString(), order);
 
-                                DataBase.readOrder();
+
                             }
 
                         }
@@ -92,6 +92,10 @@ public class UDPServer {
                     order.printOrder();
                     LocalTime currentTime = LocalTime.now();
                     System.out.println("The current time is: " + currentTime);
+
+                    DataBase.readOrder();
+                    // DataBase.insertOrder("Pan", "000", "P4", "00", "00", "00", "00");
+                    DataBase.updateOrder("000", true);
 
 
                 } catch (Exception e) {
