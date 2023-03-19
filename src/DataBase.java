@@ -2,6 +2,8 @@
 
 import java.sql.*;
 import java.util.Objects;
+import java.util.List;
+import java.util.ArrayList;
 
 
 public class DataBase {
@@ -73,6 +75,37 @@ public class DataBase {
         return 1;
     }
 
+    public static List<Order> uploadUnfinishedOrders(){
+        numberOfDataBaseQuerys++;
+
+        List<Order> orders = new ArrayList<>();
+
+        // Connect to the DBMS (DataBase Management Server)
+        String query  = "SELECT * FROM infi.orders WHERE state = 'WAITING' OR state = 'PROCESSING' ;";
+        // Connect to the DBMS (DataBase Management Server)
+        try(Connection conn = DriverManager.getConnection(db_url, db_user, passwd);
+            // Execute an SQL statement
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);) {
+            // Analyse the resulting data
+            while (rs.next()) {
+                orders.add(new Order(rs.getString("number"),
+                        rs.getString("workpiece"),
+                        rs.getString("quantity"),
+                        rs.getString("duedate"),
+                        rs.getString("latepen"),
+                        rs.getString("earlypen"),
+                        rs.getString("state")));
+            }
+
+            return orders;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static int updateStock(String WorkPiece, int Quantity){
         numberOfDataBaseQuerys++;
         // Connect to the DBMS (DataBase Management Server)
@@ -111,5 +144,6 @@ public class DataBase {
         }
         return -1;
     }
+
 
 }

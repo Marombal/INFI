@@ -9,13 +9,26 @@
 
 import java.util.ArrayList;
 import java.util.List;
-public class MPS {
+
+public class MPS extends Thread{
 
     String Number, PieceInitial, PieceFinal, Quantity;
+    private static List<Order> orders = new ArrayList<>();
 
-    private List<Order> orders = new ArrayList<>();
+    @Override
+    public void run(){
+        while(true){
+            System.out.println("Updating MPS...");
 
-    public void addOrder(Order e){
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {}
+        }
+    }
+
+
+
+    public static void addOrder(Order e){
         if(e!=null)
             orders.add(e);
     }

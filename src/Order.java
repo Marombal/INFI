@@ -7,9 +7,21 @@ public class Order {
     private String DueDate;
     private String LatePen;
     private String EarlyPen;
-    private String Client;
+    private String Client = "????";
+    //private String Number;
+    private String State;
 
     Order(){}
+
+    Order(String number, String WP, String q, String DD, String LP, String EP, String state){
+        this.OrderNumber = number;
+        this.WorkPiece = WP;
+        this.Quantity = q;
+        this.DueDate = DD;
+        this.LatePen = LP;
+        this.EarlyPen = EP;
+        this.State = state;
+    }
 
     public void setQuantity(String quantity) {
         Quantity = quantity;
@@ -35,12 +47,20 @@ public class Order {
         LatePen = latePen;
     }
 
+    public void setState(String state){
+        State = state;
+    }
+
     public void printOrder(){
         //System.out.println(OrderNumber + Quantity + WorkPiece);
         System.out.println("----- Printing ORDER -----");
-        System.out.println("Number: " + OrderNumber);
-        System.out.println("WorkPiece: " + WorkPiece);
-        System.out.println("Quantity: " + Quantity);
+        System.out.println("Number: " + this.OrderNumber);
+        System.out.println("WorkPiece: " + this.WorkPiece);
+        System.out.println("Quantity: " + this.Quantity);
+        System.out.println("DueDate: " + this.DueDate);
+        System.out.println("LatePen: " + this.LatePen);
+        System.out.println("EarlyPen: " + this.EarlyPen);
+        System.out.println("State: " + this.State);
     }
 
     public void processOrder(){

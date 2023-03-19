@@ -1,32 +1,30 @@
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.*;
-import javax.xml.parsers.*;
-import org.xml.sax.*;
-import java.io.ByteArrayInputStream;
-import java.net.*;
-import javax.xml.parsers.*;
-import org.w3c.dom.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.time.LocalTime;
 
+public class UDPListener extends Thread{
 
-public class UDPServer{
-
-    static MPS mps = new MPS();
-
-    public static void UDPListener() {
+    @Override
+    public void run(){
         DatagramSocket socket = null;
         DatagramPacket packet = null;
 
         System.out.println("ERP here, waiting orders via UDP (port: 54321)... ");
 
-        /* */
         try {
             // Create a new DatagramSocket to receive UDP packets
             socket = new DatagramSocket(54321);
 
             // Create a new byte array to store incoming packet data
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[1024 * 2];
 
             // Create a new DatagramPacket to receive incoming packets
             packet = new DatagramPacket(buffer, buffer.length);
@@ -69,47 +67,25 @@ public class UDPServer{
                     // System.out.println("Parsed to:"); // DEBUG
 
                     Order order = new Order();
-                    //System.out.println(doc.getDocumentElement().getAttributes());
+
+                    order.setState("WAITING");
 
                     // Print the text content of each element
                     for (int i = 0; i < nodeList.getLength(); i++) {
                         Node node = nodeList.item(i);
                         if (node.getNodeType() == Node.ELEMENT_NODE) {
-                            // System.out.println(node.getNodeName() + ": " + node.getTextContent()); // DEBUG
 
                             int NumberOfAttributes = node.getAttributes().getLength();
 
                             for(int j = 0; j < NumberOfAttributes; j++){
-                                // System.out.println("Attributes ->  " + node.getAttributes().item(j)); // DEBUG
-                                // System.out.println(extractStringFromQuotes(node.getAttributes().item(j).toString())); // DEBUG
-
-
                                 fillOrder(node.getAttributes().item(j).toString(), order);
-
-
                             }
 
                         }
                     }
 
-                    order.printOrder();
-                    LocalTime currentTime = LocalTime.now();
-                    System.out.println("The current time is: " + currentTime);
+                    //order.printOrder();
 
-                    DataBase.readOrder();
-
-                    /*
-                    // DataBase.insertOrder("Pan", "000", "P4", "00", "00", "00", "00");
-                    // DataBase.updateOrder("000", true);
-                    // System.out.println(DataBase.getStock("P1"));
-                    // DataBase.updateStock("P1", 0);
-                    // System.out.println(DataBase.getStock("P1"));
-                    */
-                    mps.addOrder(order);
-                    System.out.println(mps.numberOfOrders());
-                    mps.printOrders();
-
-                    order.processOrder();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -129,12 +105,10 @@ public class UDPServer{
     }
 
 
-    public static int extractIntFromQuotes(String str) {
-        int startIndex = str.indexOf('"') + 1;
-        int endIndex = str.lastIndexOf('"');
-        String numString = str.substring(startIndex, endIndex);
-        return Integer.parseInt(numString);
-    }
+
+
+
+
 
     public static String extractStringFromQuotes(String str) {
         int startIndex = str.indexOf('"') + 1;
@@ -144,10 +118,10 @@ public class UDPServer{
     }
 
     /*
-    * fillOrder
-    * find what type of attributes had in the "str"
-    * adds the respective attribute to the class order
-    * */
+     * fillOrder
+     * find what type of attributes had in the "str"
+     * adds the respective attribute to the class order
+     * */
     public static void fillOrder(String str, Order order){
         //str can be from all types of attributes, find what type it is and add to that type
 
@@ -186,3 +160,8 @@ public class UDPServer{
     }
 
 }
+
+
+
+
+
