@@ -1,4 +1,5 @@
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -64,34 +65,35 @@ public class UDPListener extends Thread{
                     // Get a list of all elements in the document
                     NodeList nodeList = doc.getDocumentElement().getChildNodes();
 
-                    // System.out.println("Parsed to:"); // DEBUG
 
-                    Order order = new Order();
 
-                    order.setState("WAITING");
+                    NodeList orderNodes = doc.getElementsByTagName("Order");
+                    int numOrders = orderNodes.getLength();
+                    // Print the number of orders to the console
+                    System.out.println("Number of orders: " + numOrders);
 
-                    // Print the text content of each element
-                    for (int i = 0; i < nodeList.getLength(); i++) {
-                        Node node = nodeList.item(i);
-                        if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    Order[] order = new Order[numOrders];
 
-                            int NumberOfAttributes = node.getAttributes().getLength();
+                    for (int i = 0; i < orderNodes.getLength(); i++) {
+                        Node orderNode = orderNodes.item(i);
 
-                            for(int j = 0; j < NumberOfAttributes; j++){
-                                fillOrder(node.getAttributes().item(j).toString(), order);
-                            }
+                        if (orderNode.getNodeType() == Node.ELEMENT_NODE) {
+                            Element orderElement = (Element) orderNode;
+                            String number = orderElement.getAttribute("Number");
+                            String workPiece = orderElement.getAttribute("WorkPiece");
+                            String quantity = orderElement.getAttribute("Quantity");
+                            String dueDate = orderElement.getAttribute("DueDate");
+                            String latePen = orderElement.getAttribute("LatePen");
+                            String earlyPen = orderElement.getAttribute("EarlyPen");
 
+                            order[i] = new Order(number, workPiece, quantity, dueDate, latePen, earlyPen, "WAITING");
                         }
+                        // order[i].printOrder();
                     }
-
-                    //order.printOrder();
-
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
 
             }
         } catch (Exception e) {

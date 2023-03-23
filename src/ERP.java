@@ -5,7 +5,7 @@ public class ERP {
 
         /* Checks DB if there is any unfinished order */
         DBUpdater myDBUpdater = new DBUpdater();
-        myDBUpdater.start();
+        //myDBUpdater.start();
 
         /* Listener UDP to listen to Clients and add orders to DataBase */
         UDPListener myUDPListener = new UDPListener();
@@ -13,17 +13,17 @@ public class ERP {
 
         /* Process MPS */
         MPS myMPS = new MPS();
-        myMPS.start();
+        //myMPS.start();
 
         /* Calculate Profits */
         Profit myProfit = new Profit();
-        myProfit.start();
+        //myProfit.start();
 
+        /* Listen to Replies from MES */
         TCPServer myTCPServer = new TCPServer();
-        myTCPServer.start();
+        //myTCPServer.start();
 
 
-        //TCPSender.sendString("ola");
     }
 
 }
