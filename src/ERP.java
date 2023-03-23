@@ -19,6 +19,11 @@ public class ERP {
         Profit myProfit = new Profit();
         myProfit.start();
 
+        TCPServer myTCPServer = new TCPServer();
+        myTCPServer.start();
+
+
+        //TCPSender.sendString("ola");
     }
 
 }
