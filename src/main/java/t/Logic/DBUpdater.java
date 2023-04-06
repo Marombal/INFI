@@ -23,4 +23,19 @@ public class DBUpdater extends Thread{
             } catch (InterruptedException e) {}
         }
     }
+
+
+    public static int LoadUnfinishedOrders(){
+        List<Order> orders = DataBase.uploadUnfinishedOrders();
+        if(orders == null){
+            System.out.println("No Unfinished Orders to Load from DataBase");
+            return -1;
+        }else {
+            System.out.println("Loading the Unfinished Orders from DataBase");
+            for(Order order : orders){
+                MPS.addOrder(order); // order.printOrder(); // mps.printOrders();
+            }
+            return 1;
+        }
+    }
 }

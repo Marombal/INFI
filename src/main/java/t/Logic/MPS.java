@@ -16,6 +16,7 @@ public class MPS extends Thread{
     static String PieceInitial;
     static String PieceFinal;
     static String Quantity;
+    static float Tc = 0;
     private static List<Order> orders = new ArrayList<>();
 
     @Override
@@ -49,7 +50,13 @@ public class MPS extends Thread{
         }
     }
 
-    public static void sendTodayMPS(){
-        String msg = "!" + Number + PieceInitial + PieceFinal + Quantity;
+    public static String sendTodayMPS(){
+        String PPS = "A" + "0" + "0" + "D" + "0" + "0" + "P" + "0" + "0" + "0";
+
+        return PPS;
+    }
+
+    public static float getTc(){
+        return Tc;
     }
 }

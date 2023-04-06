@@ -65,6 +65,28 @@ public class Order {
         System.out.println("State: " + this.State);
     }
 
+    public String toString(){
+
+        return "Number: " + this.OrderNumber
+                + "WorkPiece: " + this.WorkPiece
+                + "Quantity: " + this.Quantity
+                + "DueDate: " + this.DueDate
+                + "LatePen: " + this.LatePen
+                + "EarlyPen: " + this.EarlyPen
+                + "State: " + this.State;
+    }
+
+    public void InsertOrderInDB(){
+        DataBase.insertOrder(this.Client
+                , this.OrderNumber
+                , this.WorkPiece
+                , this.Quantity
+                , this.DueDate
+                , this.EarlyPen
+                , this.LatePen
+                ,"WAITING");
+    }
+
     public void processOrder(){
 
         int time, days;

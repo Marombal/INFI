@@ -34,10 +34,10 @@ public class DataBase {
         }
     }
 
-    public static int insertOrder(String name, String Number, String WP, String Quantity, String DueDate, String EP, String LP){
+    public static int insertOrder(String name, String Number, String WP, String Quantity, String DueDate, String EP, String LP, String state){
         numberOfDataBaseQuerys++;
         // Connect to the DBMS (DataBase Management Server)
-        String query  = "INSERT INTO infi.orders (name, number, workpiece, quantity, duedate, latepen, earlypen) " + "VALUES ('"+ name + "', '" + Number + "', '" + WP + "', '" + Quantity + "', '" + DueDate+ "', '" + EP+ "', '" + LP + "');";
+        String query  = "INSERT INTO infi.orders (name, number, workpiece, quantity, duedate, latepen, earlypen, state) " + "VALUES ('"+ name + "', '" + Number + "', '" + WP + "', '" + Quantity + "', '" + DueDate+ "', '" + LP+ "', '" + EP + "', '" + state + "');";
 
         try(Connection conn = DriverManager.getConnection(db_url, db_user, passwd);) {
 

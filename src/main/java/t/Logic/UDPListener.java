@@ -89,6 +89,8 @@ public class UDPListener extends Thread{
 
                             order[i] = new Order(number, workPiece, quantity, dueDate, latePen, earlyPen, "WAITING");
 
+                            order[i].InsertOrderInDB();
+
                             MPS.addOrder(order[i]);
                         }
                         // order[i].printOrder();
