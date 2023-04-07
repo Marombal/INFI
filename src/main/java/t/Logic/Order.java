@@ -53,6 +53,17 @@ public class Order {
         State = state;
     }
 
+    public String getDueDate() {
+        return DueDate;
+    }
+
+    public String getOrderNumber(){
+        return OrderNumber;
+    }
+    public String getQuantity() {
+        return Quantity;
+    }
+
     public void printOrder(){
         //System.out.println(OrderNumber + Quantity + WorkPiece);
         System.out.println("----- Printing ORDER -----");

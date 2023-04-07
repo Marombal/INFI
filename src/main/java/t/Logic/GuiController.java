@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -28,6 +29,12 @@ public class GuiController implements Initializable {
     Label NumberOfOrders;
     @FXML
     Label Tc;
+    @FXML
+    Label ProcessingOrder;
+    @FXML
+    TextArea OrderInfo;
+    @FXML
+    TextArea Delivering;
 
     @FXML
     ListView OrdersList;
@@ -41,7 +48,7 @@ public class GuiController implements Initializable {
                     if(seconds > 59){
                         seconds = 0;
                         day++;
-
+                        MPS.Today = day;
 
                     }
 
@@ -57,10 +64,34 @@ public class GuiController implements Initializable {
                             addStringToListView(OrdersList, order.toString());
                         }
                     }
+
+                    /* MPS Processing */
+                    MPS.updateMPS();
+
+                    if(MPS.ProcessingOrder != null){
+                        ProcessingOrder.setText("Processing Order nº " + MPS.ProcessingOrder.getOrderNumber());
+                        OrderInfo.setText("Days to complete Transformation: " + MPS.DaysToCompleteTransformation
+                                + "\nNumber of Delivering Days: " + MPS.NumberOfDeliveringDays);
+
+
+                        List<String> delivering_days = new ArrayList<String>();
+                        for (int number : MPS.delivering_days) {
+                            String day = "Day " + number;
+                            delivering_days.add(day);
+                        }
+                        Delivering.setText(delivering_days.toString());
+
+                    }
+                    else {
+                        ProcessingOrder.setText("Processing Order nº ");
+                        OrderInfo.clear();
+                        Delivering.clear();
+                    }
                 })
         );
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+
 
     }
 

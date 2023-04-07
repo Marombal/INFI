@@ -19,10 +19,16 @@ public class MPS extends Thread{
     static float Tc = 0;
     private static List<Order> orders = new ArrayList<>();
 
+    public static Order ProcessingOrder = null;
+
+    public static int Today = 0;
+
     @Override
     public void run(){
         while(true){
             System.out.println("Updating MPS...");
+
+
 
             try {
                 Thread.sleep(5000);
@@ -58,5 +64,49 @@ public class MPS extends Thread{
 
     public static float getTc(){
         return Tc;
+    }
+
+
+    public static int DaysToCompleteTransformation;
+    public static int NumberOfDeliveringDays;
+
+    public static List<Integer> days = new ArrayList<Integer>();
+    public static List<Integer> delivering_days = new ArrayList<Integer>();
+    public static void updateMPS(){
+        if(orders == null) return;
+
+        // Check if the is any "Processing" Order
+        if(ProcessingOrder != null){
+            //
+        }
+
+        else{
+            // Choose the Order with the nearest DueDate
+            int LastDueDate = 100000;
+            for(Order order : orders){
+                if(Integer.parseInt(order.getDueDate()) < LastDueDate){
+                    ProcessingOrder = order;
+                    LastDueDate = Integer.parseInt(ProcessingOrder.getDueDate());
+                }
+            }
+        }
+
+        DaysToCompleteTransformation = Integer.parseInt(ProcessingOrder.getDueDate()) - Today;
+
+        if (Integer.parseInt(ProcessingOrder.getQuantity()) < 4) {
+            NumberOfDeliveringDays = 1;
+        } else {
+            NumberOfDeliveringDays = ((Integer.parseInt(ProcessingOrder.getQuantity()) - 1) / 4) + 1;
+        }
+
+        days.clear();
+        for(int i = Today; i < Integer.parseInt(ProcessingOrder.getDueDate()); i++){
+            days.add(i);
+        }
+
+        delivering_days.clear();
+        for(int i = Integer.parseInt(ProcessingOrder.getDueDate()); i > Integer.parseInt(ProcessingOrder.getDueDate()) + 1 - NumberOfDeliveringDays; i--){
+            delivering_days.add(i);
+        }
     }
 }

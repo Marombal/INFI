@@ -31,8 +31,10 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+
         /* Process MPS */
         MPS myMPS = new MPS();
+        //myMPS.start();
 
         /* Checks DB if there is any unfinished order */
         DBUpdater.LoadUnfinishedOrders();
