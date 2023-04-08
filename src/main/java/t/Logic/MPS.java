@@ -8,6 +8,7 @@ package t.Logic;/*
 * */
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class MPS extends Thread{
@@ -19,9 +20,12 @@ public class MPS extends Thread{
     static float Tc = 0;
     private static List<Order> orders = new ArrayList<>();
 
+    private static List<Order> orders_ordered = new ArrayList<>();
+
     public static Order ProcessingOrder = null;
 
     public static int Today = 0;
+
 
     @Override
     public void run(){
@@ -107,6 +111,57 @@ public class MPS extends Thread{
         delivering_days.clear();
         for(int i = Integer.parseInt(ProcessingOrder.getDueDate()); i > Integer.parseInt(ProcessingOrder.getDueDate()) + 1 - NumberOfDeliveringDays; i--){
             delivering_days.add(i);
+        }
+    }
+
+    public static void updateMPS2(){
+        if(orders == null) return;
+
+        sortOrdersByDueDate();
+        setDelivering_days();
+
+        System.out.println("\n\n\n");
+        for (Order order : orders_ordered) {
+            order.printOrder();
+            order.printDeliveries();
+        }
+    }
+
+    private static void sortOrdersByDueDate() {
+        // Use a lambda expression to define the ordering by due date
+        Comparator<Order> orderByDueDate = (o1, o2) -> Integer.compare(Integer.parseInt(o1.getDueDate()), Integer.parseInt(o2.getDueDate()));
+
+        // Sort the orders list by due date
+        orders.sort(orderByDueDate);
+
+        // Copy the sorted orders to the orders_ordered list
+        orders_ordered.clear();
+        orders_ordered.addAll(orders);
+    }
+
+
+    public static List<Integer> d_days_list = new ArrayList<Integer>();
+    public static int d_days;
+    private static void setDelivering_days(){
+        for (Order order : orders_ordered) {
+            if (Integer.parseInt(order.getQuantity()) < 4) {
+                d_days = 1;
+            } else {
+                d_days = ((Integer.parseInt(order.getQuantity()) - 1) / 4) + 1;
+            }
+
+            d_days_list.clear();
+            order.removeDeliveries();
+
+            for(int i = Integer.parseInt(order.getDueDate()); i > Integer.parseInt(order.getDueDate()) - d_days; i--){
+                d_days_list.add(i);
+
+                Deliver deliver = new Deliver(Integer.toString(i), "4");
+
+                order.addDeliver(deliver);
+            }
+
+
         }
     }
 }

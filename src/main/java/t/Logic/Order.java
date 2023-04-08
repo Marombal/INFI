@@ -1,5 +1,7 @@
 package t.Logic;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Order {
@@ -12,6 +14,8 @@ public class Order {
     private String Client = "????";
     //private String Number;
     private String State;
+
+    private List<Deliver> delivers = new ArrayList<>();
 
     Order(){}
 
@@ -53,6 +57,10 @@ public class Order {
         State = state;
     }
 
+    public void addDeliver(Deliver e){
+        delivers.add(e);
+    }
+
     public String getDueDate() {
         return DueDate;
     }
@@ -62,6 +70,10 @@ public class Order {
     }
     public String getQuantity() {
         return Quantity;
+    }
+
+    public String getWorkPiece() {
+        return WorkPiece;
     }
 
     public void printOrder(){
@@ -74,6 +86,25 @@ public class Order {
         System.out.println("LatePen: " + this.LatePen);
         System.out.println("EarlyPen: " + this.EarlyPen);
         System.out.println("State: " + this.State);
+    }
+
+    public void printDeliveries(){
+        for(Deliver deliver : delivers){
+            System.out.println(deliver.Day);
+            System.out.println(deliver.Quantity);
+        }
+    }
+
+    public void removeDeliveries(){
+        delivers.clear();
+    }
+
+    public String getDeliveries(){
+        StringBuilder deliverString = new StringBuilder();
+        for(Deliver deliver : delivers){
+            deliverString.append(" Day: ").append(deliver.Day).append(" Quantity: ").append(deliver.Quantity).append(" ");
+        }
+        return deliverString.toString();
     }
 
     public String toString(){

@@ -39,6 +39,9 @@ public class GuiController implements Initializable {
     @FXML
     ListView OrdersList;
 
+    @FXML
+    ListView Delivers;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Timeline timeline = new Timeline(
@@ -66,7 +69,7 @@ public class GuiController implements Initializable {
                     }
 
                     /* MPS Processing */
-                    MPS.updateMPS();
+                    MPS.updateMPS();MPS.updateMPS2();
 
                     if(MPS.ProcessingOrder != null){
                         ProcessingOrder.setText("Processing Order nº " + MPS.ProcessingOrder.getOrderNumber());
@@ -87,6 +90,14 @@ public class GuiController implements Initializable {
                         OrderInfo.clear();
                         Delivering.clear();
                     }
+
+                    assert orders != null;
+                    Delivers.getItems().clear();
+                    for(Order order : orders){
+                        Delivers.getItems().add("Order: " + order.getOrderNumber() + order.getDeliveries());
+                    }
+
+
                 })
         );
         timeline.setCycleCount(Timeline.INDEFINITE);
