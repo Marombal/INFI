@@ -33,8 +33,6 @@ public class GuiController implements Initializable {
     Label ProcessingOrder;
     @FXML
     TextArea OrderInfo;
-    @FXML
-    TextArea Delivering;
 
     @FXML
     ListView OrdersList;
@@ -82,13 +80,11 @@ public class GuiController implements Initializable {
                             String day = "Day " + number;
                             delivering_days.add(day);
                         }
-                        Delivering.setText(delivering_days.toString());
 
                     }
                     else {
                         ProcessingOrder.setText("Processing Order nº ");
                         OrderInfo.clear();
-                        Delivering.clear();
                     }
 
                     assert orders != null;

@@ -153,10 +153,16 @@ public class MPS extends Thread{
             d_days_list.clear();
             order.removeDeliveries();
 
+            int left_quantity = Integer.parseInt(order.getQuantity());
+            int daily_quantity;
             for(int i = Integer.parseInt(order.getDueDate()); i > Integer.parseInt(order.getDueDate()) - d_days; i--){
                 d_days_list.add(i);
 
-                Deliver deliver = new Deliver(Integer.toString(i), "4");
+                daily_quantity = Math.min(left_quantity, 4);
+
+                left_quantity -= daily_quantity;
+
+                Deliver deliver = new Deliver(Integer.toString(i), Integer.toString(daily_quantity));
 
                 order.addDeliver(deliver);
             }
