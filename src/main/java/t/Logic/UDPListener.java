@@ -92,6 +92,8 @@ public class UDPListener extends Thread{
                             order[i].InsertOrderInDB();
 
                             MPS.addOrder(order[i]);
+
+                            MPS.updateMPS3(order[i]);
                         }
                         // order[i].printOrder();
                     }

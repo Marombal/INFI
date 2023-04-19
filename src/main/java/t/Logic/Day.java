@@ -6,11 +6,11 @@ public class Day {
 
     private int[] virtualStock = new int[9];
 
-    private int comingP1;
-    private int comingP2;
+    private int comingP1 = 0;
+    private int comingP2 = 0;
 
-    private int deliverQuantity;
-    private int deliverPiece;
+    private int deliverQuantity = 0;
+    private int deliverPiece = 0;
 
 
     public Day(int day) {
@@ -63,5 +63,21 @@ public class Day {
 
     public void setVirtualStock(int[] virtualStock) {
         this.virtualStock = virtualStock;
+    }
+
+
+
+    public void printDay(){
+        System.out.println("\n--- Day ---");
+        // day number
+        System.out.println("DAY: " + this.day);
+        // Purchasing
+        System.out.println("comingP1: " + this.comingP1);
+        System.out.println("comingP2:" + this.comingP2);
+        // Production
+
+        // Delivering
+        System.out.println("comingP1: " + this.deliverQuantity);
+        System.out.println("comingP2:" + this.deliverPiece);
     }
 }

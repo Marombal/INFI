@@ -168,10 +168,22 @@ public class MPS extends Thread{
         int production_starting_day = starting_day + 1;
         int estimate_time = OrderTest.estimateTime();
         int num_of_days_to_production = calculateNumberOfPeriods(estimate_time, quantity);
+        allocate_days_to_production(production_starting_day, quantity, "");
 
 
 
         // Delivering Plan
+        /*
+        * 1. Gets the delivering starting day (already done in allocate_days_to_production)
+        * 2. Gets how many days will be needed to deliver
+        * 3. Allocates delivering days
+        * */
+        int delivering_start_day = 0;
+        int num_of_days_to_deliver;
+        if(quantity < 4) num_of_days_to_deliver = 1;
+        else num_of_days_to_deliver = (quantity - 1) / 4 + 1;
+        allocate_days_to_deliver(delivering_start_day, quantity, "");
+
 
 
 
@@ -228,11 +240,10 @@ public class MPS extends Thread{
         int periodsCompleted = 0;
 
         while (secondsRemaining > 0) {
+            periodsCompleted++;
             if (secondsRemaining >= secondsPerPeriod) {
-                periodsCompleted++;
                 secondsRemaining -= secondsPerPeriod;
             } else {
-                periodsCompleted++;
                 secondsRemaining = 0;
             }
         }
@@ -240,7 +251,28 @@ public class MPS extends Thread{
         return periodsCompleted;
     }
 
-    public static void allocate_days_to_production(int start, int number_of_days, int quantity, String wp){
+    public static int allocate_days_to_production(int start, int quantity, String wp){
+        return 0;
+    }
+
+    public static void printTaskSchedule(int taskTimeInSeconds, int numTasks, int periodTimeInSeconds) {
+        int periodsCompleted = calculateNumberOfPeriods(taskTimeInSeconds, numTasks);
+        int totalTasksCompleted = numTasks;
+        int tasksPerPeriod = (int) Math.ceil((double) numTasks / periodsCompleted);
+
+        System.out.println("Total periods required: " + periodsCompleted);
+        for (int i = 1; i <= periodsCompleted; i++) {
+            int tasksCompleted = Math.min(tasksPerPeriod, totalTasksCompleted);
+            System.out.println("Period " + i + ": " + tasksCompleted + " tasks completed");
+            totalTasksCompleted -= tasksCompleted;
+        }
+    }
+
+
+
+
+
+    public static int allocate_days_to_deliver(int start, int quantity, String wp){
         int day = start;
         while (quantity > 0) {
             if (quantity >= 4) {
@@ -258,6 +290,8 @@ public class MPS extends Thread{
             }
             day++;
         }
+        return day;
     }
+
 
 }
