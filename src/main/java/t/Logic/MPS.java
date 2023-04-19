@@ -10,6 +10,7 @@ package t.Logic;/*
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 public class MPS extends Thread{
 
@@ -26,6 +27,8 @@ public class MPS extends Thread{
 
     public static int Today = 0;
 
+    public static Day[] daysClass = new Day[100];
+
 
     @Override
     public void run(){
@@ -37,6 +40,13 @@ public class MPS extends Thread{
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {}
+        }
+    }
+
+
+    public void SetupMPS(){
+        for (int i = 0; i < 100; i++) {
+            daysClass[i] = new Day(i);
         }
     }
 
@@ -127,6 +137,46 @@ public class MPS extends Thread{
         }
     }
 
+    public static void updateMPS3 (Order order){
+        // This function will process one and only one order
+        Order OrderTest = order;
+        int today_day = MPS.Today;
+        int starting_day = today_day + 1;
+        int quantity = Integer.parseInt(OrderTest.getQuantity());
+
+        // Purchasing Plan
+        // checks how many pieces are already available at stock
+
+        // MAROMBAL lets consider no stock available
+        // If purchasing is needed. Determine the type of Raw Material and Quantity
+        String raw = OrderTest.RawMaterial();
+        int Quantity_Of_Purchasing;
+        if(quantity < 4) Quantity_Of_Purchasing = 1;
+        else Quantity_Of_Purchasing = (quantity - 1) / 4 + 1;
+
+        // Set day when the items will arrive
+        if(Objects.equals(raw, "P1")) daysClass[starting_day].setComingP1(quantity);
+        if(Objects.equals(raw, "P2")) daysClass[starting_day].setComingP2(quantity);
+
+        // Production Plan
+        /*
+        * 1. Gets the production starting day
+        * 2. Gets the estimating time to make 1 transformation
+        * 3. Calculates the total number of days to complete all transformations
+        * 4. Allocates space in dayClass
+        * */
+        int production_starting_day = starting_day + 1;
+        int estimate_time = OrderTest.estimateTime();
+        int num_of_days_to_production = calculateNumberOfPeriods(estimate_time, quantity);
+
+
+
+        // Delivering Plan
+
+
+
+    }
+
     private static void sortOrdersByDueDate() {
         // Use a lambda expression to define the ordering by due date
         Comparator<Order> orderByDueDate = (o1, o2) -> Integer.compare(Integer.parseInt(o1.getDueDate()), Integer.parseInt(o2.getDueDate()));
@@ -170,4 +220,44 @@ public class MPS extends Thread{
 
         }
     }
+
+    public static int calculateNumberOfPeriods(int taskTimeInSeconds, int numTasks) {
+        int totalTimeInSeconds = taskTimeInSeconds * numTasks;
+        int secondsPerPeriod = 60;
+        int secondsRemaining = totalTimeInSeconds;
+        int periodsCompleted = 0;
+
+        while (secondsRemaining > 0) {
+            if (secondsRemaining >= secondsPerPeriod) {
+                periodsCompleted++;
+                secondsRemaining -= secondsPerPeriod;
+            } else {
+                periodsCompleted++;
+                secondsRemaining = 0;
+            }
+        }
+
+        return periodsCompleted;
+    }
+
+    public static void allocate_days_to_production(int start, int number_of_days, int quantity, String wp){
+        int day = start;
+        while (quantity > 0) {
+            if (quantity >= 4) {
+
+                // definir tipo de peça
+                // atualizar stock
+                // System.out.print("4 "); // debug
+                daysClass[day].setDeliverQuantity(4);
+                quantity -= 4;
+
+            } else {
+                // System.out.print(quantity + " "); // debug
+                daysClass[day].setDeliverQuantity(quantity);
+                quantity = 0;
+            }
+            day++;
+        }
+    }
+
 }

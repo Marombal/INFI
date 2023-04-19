@@ -215,4 +215,21 @@ public class Order {
             System.out.println("Total time in machines: " + time + " seconds. (at least " + days + " days to complete)");
         }
     }
+
+
+    public String RawMaterial(){
+        if(Objects.equals(WorkPiece, "P3")) return "P2";
+        else if(Objects.equals(WorkPiece, "P4")) return "P2";
+        else if(Objects.equals(WorkPiece, "P5")) return "P2";
+        else if(Objects.equals(WorkPiece, "P6")) return "P1";
+        else if(Objects.equals(WorkPiece, "P7")) return "P2";
+        else if(Objects.equals(WorkPiece, "P8")) return "P1";
+        else if(Objects.equals(WorkPiece, "P9")) return "P2";
+
+        return null;
+    }
+
+    public int estimateTime(){
+        return 20;
+    }
 }
