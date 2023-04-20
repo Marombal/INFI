@@ -225,6 +225,7 @@ public class MPS extends Thread{
         int producing_quantity = quantity;
         int production_time = 20;
         int producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
+        int i;
 
         daysClass[delivering_day - producing_days].setDeliverQuantity(producing_quantity);
 
