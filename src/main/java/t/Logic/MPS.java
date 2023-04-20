@@ -50,6 +50,12 @@ public class MPS extends Thread{
         }
     }
 
+    public static void print10days(){
+        for (int i = 0; i < 10; i++) {
+            daysClass[i].printDay();
+        }
+    }
+
 
 
     public static void addOrder(Order e){
@@ -184,8 +190,43 @@ public class MPS extends Thread{
         else num_of_days_to_deliver = (quantity - 1) / 4 + 1;
         allocate_days_to_deliver(delivering_start_day, quantity, "");
 
+    }
 
+    public static void updateMPS4 (Order order){
+        // This function will process one and only one order
+        Order OrderTest = order;
+        int today_day = MPS.Today;
+        int starting_day = today_day + 1;
+        int quantity = Integer.parseInt(OrderTest.getQuantity());
 
+        // Delivering Plan
+        /*
+         * 1. Gets the delivering day
+         * 2. Gets delivering quantity
+         * 3. Gets delivering piece
+         * 4. Allocates delivering day
+        * */
+        int delivering_day = Integer.parseInt(OrderTest.getDueDate());          // 1.
+        int delivering_quantity = quantity;                                     // 2.
+        String delivering_piece = OrderTest.getWorkPiece();                     // 3.
+
+        daysClass[delivering_day].setDeliverQuantity(delivering_quantity);      // 4.
+        daysClass[delivering_day].setDeliverPiece(delivering_piece);            // 4.
+
+        // Production Plan
+        /*
+        * //Gets the number of simple transformations
+        * Gets quantity
+        * Gets estimate production time
+        * Gets the number of days to produce
+        * Allocate days based on quantity to produce
+        * */
+
+        int producing_quantity = quantity;
+        int production_time = 20;
+        int producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
+
+        daysClass[delivering_day - producing_days].setDeliverQuantity(producing_quantity);
 
     }
 

@@ -93,7 +93,9 @@ public class UDPListener extends Thread{
 
                             MPS.addOrder(order[i]);
 
-                            MPS.updateMPS3(order[i]);
+                            //MPS.updateMPS3(order[i]);
+                            MPS.updateMPS4(order[i]); MPS.print10days();
+
                         }
                         // order[i].printOrder();
                     }

@@ -34,6 +34,7 @@ public class Main extends Application {
 
         /* Process MPS */
         MPS myMPS = new MPS();
+        myMPS.SetupMPS();
         //myMPS.start();
 
         /* Checks DB if there is any unfinished order */
