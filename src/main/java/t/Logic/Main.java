@@ -38,7 +38,7 @@ public class Main extends Application {
         //myMPS.start();
 
         /* Checks DB if there is any unfinished order */
-        DBUpdater.LoadUnfinishedOrders();
+        //DBUpdater.LoadUnfinishedOrders();
 
         /* Listener UDP to listen to Clients and add orders to DataBase */
         UDPListener myUDPListener = new UDPListener();

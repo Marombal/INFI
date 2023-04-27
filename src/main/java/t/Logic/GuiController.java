@@ -67,7 +67,7 @@ public class GuiController implements Initializable {
                     }
 
                     /* MPS Processing */
-                    MPS.updateMPS();MPS.updateMPS2();
+                    //MPS.updateMPS();MPS.updateMPS2();
 
                     if(MPS.ProcessingOrder != null){
                         ProcessingOrder.setText("Processing Order nº " + MPS.ProcessingOrder.getOrderNumber());

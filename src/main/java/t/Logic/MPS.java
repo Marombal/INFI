@@ -174,7 +174,7 @@ public class MPS extends Thread{
         int production_starting_day = starting_day + 1;
         int estimate_time = OrderTest.estimateTime();
         int num_of_days_to_production = calculateNumberOfPeriods(estimate_time, quantity);
-        allocate_days_to_production(production_starting_day, quantity, "");
+        //allocate_days_to_production(production_starting_day, quantity, num_of_days_to_production, tasksIn60Seconds(e),"P6");
 
 
 
@@ -216,18 +216,43 @@ public class MPS extends Thread{
         // Production Plan
         /*
         * //Gets the number of simple transformations
+        * Gets the last day when all production need to be completed
         * Gets quantity
         * Gets estimate production time
         * Gets the number of days to produce
         * Allocate days based on quantity to produce
         * */
 
+        int production_last_day = delivering_day - 1;
         int producing_quantity = quantity;
-        int production_time = 20;
+        int production_time = 25;
         int producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
-        int i;
+        int max = tasksIn60Seconds(production_time);
+        String production_piece = OrderTest.getWorkPiece();
 
-        daysClass[delivering_day - producing_days].setDeliverQuantity(producing_quantity);
+        int taken_days = allocate_days_to_production(production_last_day, producing_quantity, producing_days, max, production_piece);
+
+        // Purchasing Plan
+        /*
+         * Stock...
+         * Gets quantity
+         * Gets number of purchases
+         * Gets the day when things need to be order
+         * Gets the raw material
+         * */
+
+        int purchase_deliver = production_last_day - taken_days;
+        int purchasing_quantity = quantity; // PARA JÁ
+        int n_orders = num_purchasing(purchasing_quantity);
+        String raw = OrderTest.RawMaterial();
+
+        if(Objects.equals(raw, "P1")){
+            daysClass[purchase_deliver].setComingP1(n_orders * 4);
+        }
+        if(Objects.equals(raw, "P2")){
+            daysClass[purchase_deliver].setComingP2(n_orders * 4);
+        }
+
 
     }
 
@@ -275,6 +300,12 @@ public class MPS extends Thread{
         }
     }
 
+    public static int num_purchasing(int num) {
+        return (num + 3) / 4;
+    }
+
+
+
     public static int calculateNumberOfPeriods(int taskTimeInSeconds, int numTasks) {
         int totalTimeInSeconds = taskTimeInSeconds * numTasks;
         int secondsPerPeriod = 60;
@@ -293,9 +324,28 @@ public class MPS extends Thread{
         return periodsCompleted;
     }
 
-    public static int allocate_days_to_production(int start, int quantity, String wp){
-        return 0;
+    public static int allocate_days_to_production(int start, int quantity, int days, int max, String wp){
+        int i = 0;
+        while(quantity > 0){
+            if(quantity >= max) {
+                daysClass[start - i].setProduction(max, wp);
+                quantity -= max;
+            }
+            else {
+                daysClass[start - i].setProduction(quantity, wp);
+                quantity -= quantity;
+            }
+            i++;
+        }
+
+
+        return i;
     }
+
+    public static int tasksIn60Seconds(int taskDuration) {
+        return 60 / taskDuration;
+    }
+
 
     public static void printTaskSchedule(int taskTimeInSeconds, int numTasks, int periodTimeInSeconds) {
         int periodsCompleted = calculateNumberOfPeriods(taskTimeInSeconds, numTasks);

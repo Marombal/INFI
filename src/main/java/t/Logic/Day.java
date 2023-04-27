@@ -1,5 +1,7 @@
 package t.Logic;
 
+import java.util.Objects;
+
 public class Day {
 
     private int day;
@@ -101,6 +103,30 @@ public class Day {
         this.virtualStock = virtualStock;
     }
 
+    public void setProduction(int quantity, String WorkPiece){
+        if(Objects.equals("P3", WorkPiece)){
+            setProductionP3(quantity);
+        }
+        else if(Objects.equals("P4", WorkPiece)){
+            setProductionP4(quantity);
+        }
+        else if(Objects.equals("P5", WorkPiece)){
+            setProductionP5(quantity);
+        }
+        else if(Objects.equals("P6", WorkPiece)){
+            setProductionP6(quantity);
+        }
+        else if(Objects.equals("P7", WorkPiece)){
+            setProductionP7(quantity);
+        }
+        else if(Objects.equals("P8", WorkPiece)){
+            setProductionP8(quantity);
+        }
+        else if(Objects.equals("P9", WorkPiece)){
+            setProductionP9(quantity);
+        }
+    }
+
     public void setProductionP3(int productionP3) {
         this.productionP3 = productionP3;
     }
@@ -148,7 +174,7 @@ public class Day {
         System.out.println("P9: " + this.productionP9);
 
         // Delivering
-        System.out.println("comingP1: " + this.deliverQuantity);
-        System.out.println("comingP2:" + this.deliverPiece);
+        System.out.println("deliverQuantity: " + this.deliverQuantity);
+        System.out.println("deliverPiece:" + this.deliverPiece);
     }
 }
