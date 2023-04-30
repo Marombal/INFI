@@ -232,4 +232,17 @@ public class Order {
     public int estimateTime(){
         return 20;
     }
+
+    public int numberOfTransformations(){
+        if(Objects.equals(WorkPiece, "P3")) return 1;
+        else if(Objects.equals(WorkPiece, "P4")) return 1;
+        else if(Objects.equals(WorkPiece, "P5")) return 4;
+        else if(Objects.equals(WorkPiece, "P6")) return 1;
+        else if(Objects.equals(WorkPiece, "P7")) return 2;
+        else if(Objects.equals(WorkPiece, "P8")) return 2;
+        else if(Objects.equals(WorkPiece, "P9")) return 3;
+
+        return -1;
+    }
+
 }

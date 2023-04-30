@@ -50,8 +50,8 @@ public class MPS extends Thread{
         }
     }
 
-    public static void print10days(){
-        for (int i = 0; i < 10; i++) {
+    public static void print20days(){
+        for (int i = 0; i < 20; i++) {
             daysClass[i].printDay();
         }
     }
@@ -231,6 +231,57 @@ public class MPS extends Thread{
         String production_piece = OrderTest.getWorkPiece();
 
         int taken_days = allocate_days_to_production(production_last_day, producing_quantity, producing_days, max, production_piece);
+
+        /*
+        * Se a peça produzida for P8, alocar também fazer P6
+        * Se a peça produzida for P7, alcoar também fazer P4
+        * Se a peça produzida for P9, alcoar também fazer P7
+        * Se a peça produzida for P5, alcoar também fazer P9
+        * */
+
+        if(Objects.equals(production_piece, "P8")){
+            int p_day = production_last_day - taken_days;
+            production_time = 28; // !!
+            producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
+            max = tasksIn60Seconds(production_time);
+            production_piece = "P6";
+            int taken_days_aux = allocate_days_to_production(p_day, producing_quantity, producing_days, max, production_piece);
+
+            taken_days += taken_days_aux;
+        }
+
+        if(Objects.equals(production_piece, "P5")){
+            int p_day = production_last_day - taken_days;
+            production_time = 28; // !!
+            producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
+            max = tasksIn60Seconds(production_time);
+            production_piece = "P9";
+            int taken_days_aux = allocate_days_to_production(p_day, producing_quantity, producing_days, max, production_piece);
+
+            taken_days += taken_days_aux;
+        }
+
+        if(Objects.equals(production_piece, "P9")){
+            int p_day = production_last_day - taken_days;
+            production_time = 28; // !!
+            producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
+            max = tasksIn60Seconds(production_time);
+            production_piece = "P7";
+            int taken_days_aux = allocate_days_to_production(p_day, producing_quantity, producing_days, max, production_piece);
+
+            taken_days += taken_days_aux;
+        }
+
+        if(Objects.equals(production_piece, "P7")){
+            int p_day = production_last_day - taken_days;
+            production_time = 28; // !!
+            producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
+            max = tasksIn60Seconds(production_time);
+            production_piece = "P4";
+            int taken_days_aux = allocate_days_to_production(p_day, producing_quantity, producing_days, max, production_piece);
+
+            taken_days += taken_days_aux;
+        }
 
         // Purchasing Plan
         /*
