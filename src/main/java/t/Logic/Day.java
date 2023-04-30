@@ -218,12 +218,14 @@ public class Day {
 
         int delivering_piece = getPNumber(deliverPiece);
 
-        String generatedString = String.format("DPP-D%dPU%d%dPR%d%d%d%d%d%dD%d%d-DPP",
+        String generatedString = String.format("DPP-D%dPU%d%dPR%d%d%d%d%d%d%dD%d%d-DPP",
                 day,
                 comingP1, comingP2,
                 productionP3, productionP4, productionP5, productionP6, productionP7, productionP8, productionP9,
                 delivering_piece, deliverQuantity);
 
+        //System.out.println("DP - " + delivering_piece);
+        //System.out.println("DQ - " + deliverQuantity);
         System.out.println(generatedString);
 
         return generatedString;
