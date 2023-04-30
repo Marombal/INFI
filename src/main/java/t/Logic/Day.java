@@ -18,9 +18,12 @@ public class Day {
     private int productionP7 = 0;
     private int productionP8 = 0;
     private int productionP9 = 0;
+    private int typesProducing = 0;
 
     private int deliverQuantity = 0;
     private String deliverPiece = " ";
+
+
 
 
     public Day(int day) {
@@ -79,6 +82,10 @@ public class Day {
         return productionP9;
     }
 
+    public int getTypesProducing() {
+        return typesProducing;
+    }
+
     public void setComingP1(int comingP1) {
         this.comingP1 = comingP1;
     }
@@ -125,6 +132,8 @@ public class Day {
         else if(Objects.equals("P9", WorkPiece)){
             setProductionP9(quantity);
         }
+
+        countTypesProducing();
     }
 
     public void setProductionP3(int productionP3) {
@@ -154,6 +163,33 @@ public class Day {
     public void setProductionP9(int productionP9) {
         this.productionP9 = productionP9;
     }
+
+    public void countTypesProducing() {
+        int count = 0;
+        if (productionP3 > 0) {
+            count++;
+        }
+        if (productionP4 > 0) {
+            count++;
+        }
+        if (productionP5 > 0) {
+            count++;
+        }
+        if (productionP6 > 0) {
+            count++;
+        }
+        if (productionP7 > 0) {
+            count++;
+        }
+        if (productionP8 > 0) {
+            count++;
+        }
+        if (productionP9 > 0) {
+            count++;
+        }
+        typesProducing = count;
+    }
+
 
 
     public void printDay(){
