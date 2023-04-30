@@ -213,4 +213,29 @@ public class Day {
         System.out.println("deliverQuantity: " + this.deliverQuantity);
         System.out.println("deliverPiece:" + this.deliverPiece);
     }
+
+    public String sendDay(){
+
+        int delivering_piece = getPNumber(deliverPiece);
+
+        String generatedString = String.format("DPP-D%dPU%d%dPR%d%d%d%d%d%dD%d%d-DPP",
+                day,
+                comingP1, comingP2,
+                productionP3, productionP4, productionP5, productionP6, productionP7, productionP8, productionP9,
+                delivering_piece, deliverQuantity);
+
+        System.out.println(generatedString);
+
+        return generatedString;
+    }
+
+
+    private int getPNumber(String input) {
+        if (input.charAt(0) == 'P' && input.charAt(1) >= '1' && input.charAt(1) <= '9') {
+            return Integer.parseInt(input.substring(1));
+        } else {
+            return 0;
+        }
+    }
+
 }

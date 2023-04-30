@@ -44,6 +44,11 @@ public class Main extends Application {
         UDPListener myUDPListener = new UDPListener();
         myUDPListener.start();
 
+        /* Listener TCP to listen to MES */
+        TCPServer myTCPServer = new TCPServer();
+        myTCPServer.start();
+
+
         MPS.printOrders();
 
         /* Launch GUI */

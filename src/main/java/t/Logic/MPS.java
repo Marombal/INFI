@@ -56,6 +56,12 @@ public class MPS extends Thread{
         }
     }
 
+    public static void print20daysMES(){
+        for (int i = 0; i < 20; i++) {
+            daysClass[i].sendDay();
+        }
+    }
+
 
 
     public static void addOrder(Order e){
