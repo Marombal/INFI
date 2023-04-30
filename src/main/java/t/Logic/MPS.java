@@ -240,44 +240,75 @@ public class MPS extends Thread{
         * */
 
         if(Objects.equals(production_piece, "P8")){
-            int p_day = production_last_day - taken_days;
-            production_time = 28; // !!
-            producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
-            max = tasksIn60Seconds(production_time);
+            int p_day = production_last_day - 1;
             production_piece = "P6";
+            production_time = estimatePieceTime(production_piece); // !!
+            producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
+
+            //max = tasksIn60Seconds(production_time);
+
             int taken_days_aux = allocate_days_to_production(p_day, producing_quantity, producing_days, max, production_piece);
 
             taken_days += taken_days_aux;
         }
 
         if(Objects.equals(production_piece, "P5")){
-            int p_day = production_last_day - taken_days;
-            production_time = 28; // !!
-            producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
-            max = tasksIn60Seconds(production_time);
             production_piece = "P9";
+            //int p_day = production_last_day - taken_days;
+            int p_day = production_last_day - 1;
+            production_time = estimatePieceTime(production_piece); // !!
+            producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
+
+            // max = tasksIn60Seconds(production_time);
+
             int taken_days_aux = allocate_days_to_production(p_day, producing_quantity, producing_days, max, production_piece);
 
             taken_days += taken_days_aux;
         }
 
         if(Objects.equals(production_piece, "P9")){
-            int p_day = production_last_day - taken_days;
-            production_time = 28; // !!
-            producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
-            max = tasksIn60Seconds(production_time);
             production_piece = "P7";
+
+            int x;
+            if(Objects.equals(OrderTest.getWorkPiece(), "P9")) {
+                x = 1;
+            }
+            else {
+                x = 2;
+            }
+
+
+            int p_day = production_last_day - x;
+            production_time = estimatePieceTime(production_piece); // !!
+            producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
+
+            //max = tasksIn60Seconds(production_time);
+
             int taken_days_aux = allocate_days_to_production(p_day, producing_quantity, producing_days, max, production_piece);
 
             taken_days += taken_days_aux;
         }
 
         if(Objects.equals(production_piece, "P7")){
-            int p_day = production_last_day - taken_days;
-            production_time = 28; // !!
-            producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
-            max = tasksIn60Seconds(production_time);
             production_piece = "P4";
+
+            int x;
+            if(Objects.equals(OrderTest.getWorkPiece(), "P7")) {
+                x = 1;
+            }
+            else if(Objects.equals(OrderTest.getWorkPiece(), "P9")){
+                x = 2;
+            }
+            else {
+                x = 3;
+            }
+
+            int p_day = production_last_day - x;
+            production_time = estimatePieceTime(production_piece); // !!
+            producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
+
+            //max = tasksIn60Seconds(production_time);
+
             int taken_days_aux = allocate_days_to_production(p_day, producing_quantity, producing_days, max, production_piece);
 
             taken_days += taken_days_aux;
@@ -436,5 +467,19 @@ public class MPS extends Thread{
         return day;
     }
 
+    public static int estimatePieceTime(String WorkPiece){
+        int transportation_time = 10;
+        int transformation_time = 0;
+
+        if(Objects.equals(WorkPiece, "P3")) transformation_time = 10;
+        else if(Objects.equals(WorkPiece, "P4")) transformation_time = 10;
+        else if(Objects.equals(WorkPiece, "P5")) transformation_time = 15;
+        else if(Objects.equals(WorkPiece, "P6")) transformation_time = 20;
+        else if(Objects.equals(WorkPiece, "P7")) transformation_time = 10;
+        else if(Objects.equals(WorkPiece, "P8")) transformation_time = 30;
+        else if(Objects.equals(WorkPiece, "P9")) transformation_time = 20;
+
+        return transformation_time + transportation_time;
+    }
 
 }
