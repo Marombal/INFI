@@ -330,9 +330,34 @@ public class MPS extends Thread{
          * */
 
         int purchase_deliver = production_last_day - taken_days;
-        int purchasing_quantity = quantity; // PARA JÁ
-        int n_orders = num_purchasing(purchasing_quantity);
         String raw = OrderTest.RawMaterial();
+
+        int purchasing_quantity = 0;
+        if(Objects.equals(raw, "P1")){
+            if(Stock.P1 >= quantity){
+                Stock.P1 -= quantity;
+                purchasing_quantity = 0;
+            }
+            else{
+                purchasing_quantity = quantity - Stock.P1;
+                Stock.P1 = 0;
+            }
+        }
+
+
+        if(Objects.equals(raw, "P2")){
+            if(Stock.P2 >= quantity){
+                Stock.P2 -= quantity;
+                purchasing_quantity = 0;
+            }
+            else{
+                purchasing_quantity = quantity - Stock.P2;
+                Stock.P2 = 0;
+            }
+        }
+
+        int n_orders = num_purchasing(purchasing_quantity);
+
 
         if(Objects.equals(raw, "P1")){
             daysClass[purchase_deliver].setComingP1(n_orders * 4);
