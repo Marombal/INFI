@@ -448,13 +448,13 @@ public class MPS extends Thread{
         int i = 0;
         int count = 0;
         while(quantity > 0){
-            if((daysClass[start - i].totalPiecesProduced() <= 6) && (daysClass[start - i].totalPiecesType(wp) < 3)){
+            if((daysClass[start - i].totalPiecesProduced() + max <= 6) && (daysClass[start - i].totalPiecesType(wp) < 2)){
                 if(quantity >= max) {
-                    daysClass[start - i].setProduction(max, wp);
+                    daysClass[start - i].addProduction(max, wp);
                     quantity -= max;
                 }
                 else {
-                    daysClass[start - i].setProduction(quantity, wp);
+                    daysClass[start - i].addProduction(quantity, wp);
                     quantity -= quantity;
                 }
                 count++;

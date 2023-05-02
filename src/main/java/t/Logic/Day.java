@@ -136,6 +136,33 @@ public class Day {
         countTypesProducing();
     }
 
+    public void addProduction(int quantity, String WorkPiece){
+        if(Objects.equals("P3", WorkPiece)){
+            productionP3 += quantity;
+        }
+        else if(Objects.equals("P4", WorkPiece)){
+            productionP4 += quantity;
+        }
+        else if(Objects.equals("P5", WorkPiece)){
+            productionP5 += quantity;
+        }
+        else if(Objects.equals("P6", WorkPiece)){
+            productionP6 += quantity;
+        }
+        else if(Objects.equals("P7", WorkPiece)){
+            productionP7 += quantity;
+        }
+        else if(Objects.equals("P8", WorkPiece)){
+            productionP8 += quantity;
+        }
+        else if(Objects.equals("P9", WorkPiece)){
+            productionP9 += quantity;
+        }
+
+        countTypesProducing();
+    }
+
+
     public void setProductionP3(int productionP3) {
         this.productionP3 = productionP3;
     }
