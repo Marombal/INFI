@@ -240,4 +240,33 @@ public class Day {
         }
     }
 
+    public int totalPiecesProduced(){
+        return (productionP3 + productionP4 + productionP5 + productionP6 + productionP7 + productionP8 + productionP9);
+    }
+
+    public int totalPiecesType(String WorkPiece){
+        if(Objects.equals("P3", WorkPiece)){
+            return productionP3;
+        }
+        else if(Objects.equals("P4", WorkPiece)){
+            return productionP4;
+        }
+        else if(Objects.equals("P5", WorkPiece)){
+            return productionP5;
+        }
+        else if(Objects.equals("P6", WorkPiece)){
+            return productionP6;
+        }
+        else if(Objects.equals("P7", WorkPiece)){
+            return productionP7;
+        }
+        else if(Objects.equals("P8", WorkPiece)){
+            return productionP8;
+        }
+        else if(Objects.equals("P9", WorkPiece)){
+            return productionP9;
+        }
+
+        return -1;
+    }
 }
