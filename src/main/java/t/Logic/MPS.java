@@ -62,6 +62,12 @@ public class MPS extends Thread{
         }
     }
 
+    public static void print10days(){
+        for (int i = 0; i < 11; i++) {
+            daysClass[i].printDay();
+        }
+    }
+
 
 
     public static void addOrder(Order e){
@@ -520,7 +526,7 @@ public class MPS extends Thread{
         else if(Objects.equals(WorkPiece, "P6")) transformation_time = 20;
         else if(Objects.equals(WorkPiece, "P7")) transformation_time = 10;
         else if(Objects.equals(WorkPiece, "P8")) transformation_time = 30;
-        else if(Objects.equals(WorkPiece, "P9")) transformation_time = 20;
+        else if(Objects.equals(WorkPiece, "P9")) transformation_time = 10;
 
         return transformation_time + transportation_time;
     }

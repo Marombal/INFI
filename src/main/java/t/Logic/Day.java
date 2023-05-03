@@ -24,6 +24,16 @@ public class Day {
     private String deliverPiece = " ";
 
 
+    private int deliverP3 = 0;
+    private int deliverP4 = 0;
+    private int deliverP5 = 0;
+    private int deliverP6 = 0;
+    private int deliverP7 = 0;
+    private int deliverP8 = 0;
+    private int deliverP9 = 0;
+
+    private int typesDeliver = 0;
+
 
 
     public Day(int day) {
@@ -84,6 +94,10 @@ public class Day {
 
     public int getTypesProducing() {
         return typesProducing;
+    }
+
+    public int getTypesDeliver() {
+        return typesDeliver;
     }
 
     public void setComingP1(int comingP1) {
@@ -162,6 +176,32 @@ public class Day {
         countTypesProducing();
     }
 
+    public void addDelivering(int quantity, String WorkPiece){
+        if(Objects.equals("P3", WorkPiece)){
+            deliverP3 += quantity;
+        }
+        else if(Objects.equals("P4", WorkPiece)){
+            deliverP4 += quantity;
+        }
+        else if(Objects.equals("P5", WorkPiece)){
+            deliverP5 += quantity;
+        }
+        else if(Objects.equals("P6", WorkPiece)){
+            deliverP6 += quantity;
+        }
+        else if(Objects.equals("P7", WorkPiece)){
+            deliverP7 += quantity;
+        }
+        else if(Objects.equals("P8", WorkPiece)){
+            deliverP8 += quantity;
+        }
+        else if(Objects.equals("P9", WorkPiece)){
+            deliverP9 += quantity;
+        }
+
+        countTypesProducing();
+    }
+
 
     public void setProductionP3(int productionP3) {
         this.productionP3 = productionP3;
@@ -215,6 +255,33 @@ public class Day {
             count++;
         }
         typesProducing = count;
+    }
+
+    public void countTypesDelivering() {
+        int count = 0;
+        if (deliverP3 > 0) {
+            count++;
+        }
+        if (deliverP4 > 0) {
+            count++;
+        }
+        if (deliverP5 > 0) {
+            count++;
+        }
+        if (deliverP6 > 0) {
+            count++;
+        }
+        if (deliverP7 > 0) {
+            count++;
+        }
+        if (deliverP8 > 0) {
+            count++;
+        }
+        if (deliverP9 > 0) {
+            count++;
+        }
+
+        typesDeliver = count;
     }
 
 
