@@ -373,10 +373,14 @@ public class MPS extends Thread{
 
 
         if(Objects.equals(raw, "P1")){
-            daysClass[purchase_deliver].setComingP1(n_orders * 4);
+            //daysClass[purchase_deliver].setComingP1(n_orders * 4);
+            daysClass[purchase_deliver].addComingP1(n_orders * 4);
+            Stock.P1 += n_orders * 4;
         }
         if(Objects.equals(raw, "P2")){
-            daysClass[purchase_deliver].setComingP2(n_orders * 4);
+            //daysClass[purchase_deliver].setComingP2(n_orders * 4);
+            daysClass[purchase_deliver].addComingP2(n_orders * 4);
+            Stock.P2 += n_orders * 4;
         }
 
 

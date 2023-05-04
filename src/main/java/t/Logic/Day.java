@@ -202,6 +202,13 @@ public class Day {
         countTypesProducing();
     }
 
+    public void addComingP1(int comingP1) {
+        this.comingP1 += comingP1;
+    }
+
+    public void addComingP2(int comingP1) {
+        this.comingP1 += comingP1;
+    }
 
     public void setProductionP3(int productionP3) {
         this.productionP3 = productionP3;
