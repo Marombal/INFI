@@ -28,6 +28,7 @@ public class MPS extends Thread{
     public static int Today = 0;
 
     public static Day[] daysClass = new Day[100];
+    public static Stock[] stockClass = new Stock[100];
 
 
     @Override
@@ -47,12 +48,14 @@ public class MPS extends Thread{
     public void SetupMPS(){
         for (int i = 0; i < 100; i++) {
             daysClass[i] = new Day(i);
+            stockClass[i] = new Stock(i);
         }
     }
 
     public static void print20days(){
         for (int i = 0; i < 20; i++) {
             daysClass[i].printDay();
+            stockClass[i].printStock();
         }
     }
 
@@ -65,6 +68,7 @@ public class MPS extends Thread{
     public static void print10days(){
         for (int i = 0; i < 11; i++) {
             daysClass[i].printDay();
+            stockClass[i].printStock();
         }
     }
 
@@ -347,27 +351,28 @@ public class MPS extends Thread{
 
         int purchasing_quantity = 0;
         if(Objects.equals(raw, "P1")){
-            if(Stock.P1 >= quantity){
-                Stock.P1 -= quantity;
+            if(stockClass[purchase_deliver].P1 >= quantity){
+                // propagateSubStock(purchase_deliver, quantity, 0);
                 purchasing_quantity = 0;
             }
             else{
-                purchasing_quantity = quantity - Stock.P1;
-                Stock.P1 = 0;
+                purchasing_quantity = quantity - stockClass[purchase_deliver].P1;
+                // propagateSubStock(purchase_deliver, stockClass[purchase_deliver].P1, 0);
             }
         }
 
 
         if(Objects.equals(raw, "P2")){
-            if(Stock.P2 >= quantity){
-                Stock.P2 -= quantity;
+            if(stockClass[purchase_deliver].P2 >= quantity){
+                // propagateSubStock(purchase_deliver, 0, quantity);
                 purchasing_quantity = 0;
             }
             else{
-                purchasing_quantity = quantity - Stock.P2;
-                Stock.P2 = 0;
+                purchasing_quantity = quantity - stockClass[purchase_deliver].P2;
+                // propagateSubStock(purchase_deliver, 0 , stockClass[purchase_deliver].P2);
             }
         }
+
 
         int n_orders = num_purchasing(purchasing_quantity);
 
@@ -375,12 +380,16 @@ public class MPS extends Thread{
         if(Objects.equals(raw, "P1")){
             //daysClass[purchase_deliver].setComingP1(n_orders * 4);
             daysClass[purchase_deliver].addComingP1(n_orders * 4);
-            Stock.P1 += n_orders * 4;
+
+            propagateAddStock(purchase_deliver, n_orders * 4, 0);
+            propagateSubStock(purchase_deliver, quantity, 0);
         }
         if(Objects.equals(raw, "P2")){
             //daysClass[purchase_deliver].setComingP2(n_orders * 4);
             daysClass[purchase_deliver].addComingP2(n_orders * 4);
-            Stock.P2 += n_orders * 4;
+
+            propagateAddStock(purchase_deliver, 0, n_orders * 4);
+            propagateSubStock(purchase_deliver, 0, quantity);
         }
 
 
@@ -533,6 +542,24 @@ public class MPS extends Thread{
         else if(Objects.equals(WorkPiece, "P9")) transformation_time = 10;
 
         return transformation_time + transportation_time;
+    }
+
+    private static void propagateAddStock(int starting_day, int P1, int P2){
+        for(int i = starting_day; i < 100; i++){
+            stockClass[i].addP1(P1);
+            stockClass[i].addP2(P2);
+        }
+    }
+
+    private static void propagateSubStock(int day, int P1, int P2){
+        for(int i = 0; i < 100; i++){
+            if(stockClass[i].P1 > 0){
+                stockClass[i].subP1(P1);
+            }
+            if(stockClass[i].P2 > 0){
+                stockClass[i].subP2(P2);
+            }
+        }
     }
 
 }
