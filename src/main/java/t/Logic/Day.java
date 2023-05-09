@@ -2,7 +2,7 @@ package t.Logic;
 
 import java.util.Objects;
 
-public class Day {
+public class Day implements Cloneable{
 
     private int day;
 
@@ -122,6 +122,11 @@ public class Day {
 
     public void setVirtualStock(int[] virtualStock) {
         this.virtualStock = virtualStock;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     public void setProduction(int quantity, String WorkPiece){

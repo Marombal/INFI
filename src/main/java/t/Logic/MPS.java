@@ -52,6 +52,15 @@ public class MPS extends Thread{
         }
     }
 
+    public static Day[] cloneDaysClass() throws CloneNotSupportedException {
+        Day[] clonedDaysClass = new Day[daysClass.length];
+        for (int i = 0; i < daysClass.length; i++) {
+            clonedDaysClass[i] = (Day) daysClass[i].clone();
+        }
+        return clonedDaysClass;
+    }
+
+
     public static void print20days(){
         for (int i = 0; i < 20; i++) {
             daysClass[i].printDay();
@@ -208,7 +217,11 @@ public class MPS extends Thread{
 
     }
 
-    public static void updateMPS4 (Order order){
+    public static void updateMPS4 (Order order) throws CloneNotSupportedException {
+
+        int delivering_day = checkTime(order);
+
+
         // This function will process one and only one order
         Order OrderTest = order;
         int today_day = MPS.Today;
@@ -222,7 +235,7 @@ public class MPS extends Thread{
          * 3. Gets delivering piece
          * 4. Allocates delivering day
         * */
-        int delivering_day = Integer.parseInt(OrderTest.getDueDate());          // 1.
+        //int delivering_day = Integer.parseInt(OrderTest.getDueDate());          // 1.
         int delivering_quantity = quantity;                                     // 2.
         String delivering_piece = OrderTest.getWorkPiece();                     // 3.
 
@@ -395,6 +408,139 @@ public class MPS extends Thread{
 
     }
 
+    private static int checkTime(Order order) throws CloneNotSupportedException {
+
+        int finishing_day = -1;
+
+        Order OrderTest = order;
+        int delivering_day = Integer.parseInt(OrderTest.getDueDate());
+
+        while(finishing_day <= Today){
+
+            Day[] clonedDaysClass = cloneDaysClass();
+
+
+            int quantity = Integer.parseInt(OrderTest.getQuantity());
+
+            // Delivering Plan
+            /*
+             * 1. Gets the delivering day
+             * 2. Gets delivering quantity
+             * 3. Gets delivering piece
+             * 4. Allocates delivering day
+             * */
+
+            int delivering_quantity = quantity;                                     // 2.
+            String delivering_piece = OrderTest.getWorkPiece();                     // 3.
+
+            clonedDaysClass[delivering_day].setDeliverQuantity(delivering_quantity);      // 4.
+            clonedDaysClass[delivering_day].setDeliverPiece(delivering_piece);            // 4.
+
+            // Production Plan
+            /*
+             * //Gets the number of simple transformations
+             * Gets the last day when all production need to be completed
+             * Gets quantity
+             * Gets estimate production time
+             * Gets the number of days to produce
+             * Allocate days based on quantity to produce
+             * */
+
+            int production_last_day = delivering_day - 1;
+            int producing_quantity = quantity;
+            int production_time = 25;
+            int producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
+            int max = tasksIn60Seconds(production_time);
+            String production_piece = OrderTest.getWorkPiece();
+
+            int order_last_day = allocate_days_to_production_clone(production_last_day, producing_quantity, producing_days, max, production_piece, clonedDaysClass);
+
+            /*
+             * Se a peça produzida for P8, alocar também fazer P6
+             * Se a peça produzida for P7, alcoar também fazer P4
+             * Se a peça produzida for P9, alcoar também fazer P7
+             * Se a peça produzida for P5, alcoar também fazer P9
+             * */
+
+            if(Objects.equals(production_piece, "P8")){
+                int p_day = production_last_day - 1;
+                production_piece = "P6";
+                production_time = estimatePieceTime(production_piece); // !!
+                producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
+
+                order_last_day = allocate_days_to_production_clone(production_last_day, producing_quantity, producing_days, max, production_piece, clonedDaysClass);
+            }
+
+            if(Objects.equals(production_piece, "P5")){
+                production_piece = "P9";
+                //int p_day = production_last_day - taken_days;
+                int p_day = production_last_day - 1;
+                production_time = estimatePieceTime(production_piece); // !!
+                producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
+
+                order_last_day = allocate_days_to_production_clone(production_last_day, producing_quantity, producing_days, max, production_piece, clonedDaysClass);
+            }
+
+            if(Objects.equals(production_piece, "P9")){
+                production_piece = "P7";
+
+                int x;
+                if(Objects.equals(OrderTest.getWorkPiece(), "P9")) {
+                    x = 1;
+                }
+                else {
+                    x = 2;
+                }
+
+
+                int p_day = production_last_day - x;
+                production_time = estimatePieceTime(production_piece); // !!
+                producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
+
+                order_last_day = allocate_days_to_production_clone(production_last_day, producing_quantity, producing_days, max, production_piece, clonedDaysClass);
+            }
+
+            if(Objects.equals(production_piece, "P7")){
+                production_piece = "P4";
+
+                int x;
+                if(Objects.equals(OrderTest.getWorkPiece(), "P7")) {
+                    x = 1;
+                }
+                else if(Objects.equals(OrderTest.getWorkPiece(), "P9")){
+                    x = 2;
+                }
+                else {
+                    x = 3;
+                }
+
+                int p_day = production_last_day - x;
+                production_time = estimatePieceTime(production_piece); // !!
+                producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
+
+                order_last_day = allocate_days_to_production_clone(production_last_day, producing_quantity, producing_days, max, production_piece, clonedDaysClass);
+            }
+
+
+            // Purchasing Plan
+            /*
+             * Stock...
+             * Gets quantity
+             * Gets number of purchases
+             * Gets the day when things need to be order
+             * Gets the raw material
+             * */
+
+
+            int purchase_deliver = order_last_day;
+            finishing_day = purchase_deliver - 1;
+            delivering_day++;
+        }
+
+
+        return delivering_day;
+    }
+
     private static void sortOrdersByDueDate() {
         // Use a lambda expression to define the ordering by due date
         Comparator<Order> orderByDueDate = (o1, o2) -> Integer.compare(Integer.parseInt(o1.getDueDate()), Integer.parseInt(o2.getDueDate()));
@@ -474,6 +620,34 @@ public class MPS extends Thread{
                 }
                 else {
                     daysClass[start - i].addProduction(quantity, wp);
+                    quantity -= quantity;
+                }
+                count++;
+            }
+            i++;
+        }
+
+
+        //return count;
+        return start - i;
+    }
+
+    public static int allocate_days_to_production_clone(int start, int quantity, int days, int max, String wp, Day[] Clone){
+        int i = 0;
+        int count = 0;
+        while(quantity > 0){
+
+            if(start - i <= 0){
+                return 0;
+            }
+
+            if((Clone[start - i].totalPiecesProduced() + max <= 6) && (Clone[start - i].totalPiecesType(wp) < 2)){
+                if(quantity >= max) {
+                    Clone[start - i].addProduction(max, wp);
+                    quantity -= max;
+                }
+                else {
+                    Clone[start - i].addProduction(quantity, wp);
                     quantity -= quantity;
                 }
                 count++;
