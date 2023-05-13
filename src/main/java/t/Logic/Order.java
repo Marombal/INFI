@@ -13,6 +13,7 @@ public class Order {
     private String EarlyPen;
 
     private int RealDueDate;
+    private int StartDate;
     private String Client = "????";
     //private String Number;
     private String State;
@@ -63,6 +64,10 @@ public class Order {
         RealDueDate = realDueDate;
     }
 
+    public void setStartDate(int startDate) {
+        StartDate = startDate;
+    }
+
     public void addDeliver(Deliver e){
         delivers.add(e);
     }
@@ -84,6 +89,10 @@ public class Order {
 
     public int getRealDueDate() {
         return RealDueDate;
+    }
+
+    public int getStartDate() {
+        return StartDate;
     }
 
     public void printOrder(){

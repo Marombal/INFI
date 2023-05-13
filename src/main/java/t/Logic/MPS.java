@@ -407,6 +407,8 @@ public class MPS extends Thread{
             propagateSubStock(purchase_deliver, 0, quantity);
         }
 
+        order.setStartDate(purchase_deliver);
+
 
     }
 
