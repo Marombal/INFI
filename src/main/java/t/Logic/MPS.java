@@ -221,6 +221,8 @@ public class MPS extends Thread{
 
         int delivering_day = checkTime(order);
 
+        order.setRealDueDate(delivering_day);
+
 
         // This function will process one and only one order
         Order OrderTest = order;

@@ -11,6 +11,8 @@ public class Order {
     private String DueDate;
     private String LatePen;
     private String EarlyPen;
+
+    private int RealDueDate;
     private String Client = "????";
     //private String Number;
     private String State;
@@ -57,6 +59,10 @@ public class Order {
         State = state;
     }
 
+    public void setRealDueDate(int realDueDate) {
+        RealDueDate = realDueDate;
+    }
+
     public void addDeliver(Deliver e){
         delivers.add(e);
     }
@@ -74,6 +80,10 @@ public class Order {
 
     public String getWorkPiece() {
         return WorkPiece;
+    }
+
+    public int getRealDueDate() {
+        return RealDueDate;
     }
 
     public void printOrder(){
