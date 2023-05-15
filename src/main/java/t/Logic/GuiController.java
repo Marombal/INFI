@@ -40,6 +40,10 @@ public class GuiController implements Initializable {
     @FXML
     ListView Delivers;
 
+    @FXML
+    ListView PurchasingPlan;
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Timeline timeline = new Timeline(
@@ -93,6 +97,16 @@ public class GuiController implements Initializable {
                         Delivers.getItems().add("Order: " + order.getOrderNumber() + order.getDeliveries());
                     }
 
+                    List<PurchasingOrder> PurchasingOrders = MPS.getPurchasingOrders();
+                    PurchasingPlan.getItems().clear();
+                    for (PurchasingOrder purchasingOrder : PurchasingOrders) {
+                        // System.out.println(plan.Supplier + " - " + plan.quantity + " - " + plan.purchasing_day);
+                        String porder = "From: " + purchasingOrder.Supplier +
+                                " Quantity: " + purchasingOrder.quantity +
+                                " of Piece: " + purchasingOrder.WorkPiece +
+                                " ordered in day: " + purchasingOrder.purchasing_day;
+                        PurchasingPlan.getItems().add(porder);
+                    }
 
                 })
         );

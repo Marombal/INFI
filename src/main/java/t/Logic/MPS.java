@@ -111,12 +111,17 @@ public class MPS extends Thread{
         return Tc;
     }
 
+    public static List<PurchasingOrder> getPurchasingOrders() {
+        return purchasingOrders;
+    }
 
     public static int DaysToCompleteTransformation;
     public static int NumberOfDeliveringDays;
 
     public static List<Integer> days = new ArrayList<Integer>();
     public static List<Integer> delivering_days = new ArrayList<Integer>();
+
+    static List<PurchasingOrder> purchasingOrders = new ArrayList<>();
     public static void updateMPS(){
         if(orders == null) return;
 
@@ -398,6 +403,13 @@ public class MPS extends Thread{
 
             propagateAddStock(purchase_deliver, n_orders * 4, 0);
             propagateSubStock(purchase_deliver, quantity, 0);
+
+            if(purchasing_quantity > 0){
+                // Create a new PurchasingOrder object
+                PurchasingOrder order1 = new PurchasingOrder("Supplier C", n_orders * 4, purchase_deliver - 1, "P1");
+                // Add the PurchasingPlan to the list
+                purchasingOrders.add(order1);
+            }
         }
         if(Objects.equals(raw, "P2")){
             //daysClass[purchase_deliver].setComingP2(n_orders * 4);
@@ -405,6 +417,13 @@ public class MPS extends Thread{
 
             propagateAddStock(purchase_deliver, 0, n_orders * 4);
             propagateSubStock(purchase_deliver, 0, quantity);
+
+            if(purchasing_quantity > 0){
+                // Create a new PurchasingOrder object
+                PurchasingOrder order1 = new PurchasingOrder("Supplier C", n_orders * 4, purchase_deliver - 1, "P2");
+                // Add the PurchasingPlan to the list
+                purchasingOrders.add(order1);
+            }
         }
 
         order.setStartDate(purchase_deliver);
