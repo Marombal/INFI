@@ -31,17 +31,7 @@
             <Font size="45.0" />
          </font>
       </Label>
-      <Label layoutX="961.0" layoutY="476.0" text="Costs">
-         <font>
-            <Font size="45.0" />
-         </font>
-      </Label>
-      <Label fx:id="Tc" layoutX="965.0" layoutY="531.0" text="Tc = 0 €">
-         <font>
-            <Font size="45.0" />
-         </font>
-      </Label>
-      <Label layoutX="967.0" layoutY="580.0" text="Pt = 0 €">
+      <Label layoutX="895.0" layoutY="435.0" text="Costs">
          <font>
             <Font size="45.0" />
          </font>
@@ -66,5 +56,6 @@
       <ListView fx:id="DeliveringPlan" layoutX="33.0" layoutY="494.0" prefHeight="97.0" prefWidth="653.0" />
       <ListView fx:id="PurchasingPlan" layoutX="33.0" layoutY="658.0" prefHeight="105.0" prefWidth="666.0" />
       <ListView fx:id="ProductionPlan" layoutX="840.0" layoutY="243.0" prefHeight="137.0" prefWidth="447.0" />
+      <ListView fx:id="Costs" layoutX="849.0" layoutY="539.0" prefHeight="165.0" prefWidth="542.0" />
    </children>
 </AnchorPane>

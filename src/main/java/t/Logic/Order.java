@@ -285,7 +285,7 @@ public class Order {
     public float Dc(){
         float Dc;
 
-        Dc = (float) (Rc() * (StartDate - RealDueDate) * 0.01);
+        Dc = (float) (Rc() * (RealDueDate - StartDate) * 0.01);
 
         return Dc;
     }

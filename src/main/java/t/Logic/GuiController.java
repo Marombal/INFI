@@ -28,8 +28,6 @@ public class GuiController implements Initializable {
     @FXML
     Label NumberOfOrders;
     @FXML
-    Label Tc;
-    @FXML
     Label ProcessingOrder;
     @FXML
     ListView OrdersList;
@@ -42,6 +40,9 @@ public class GuiController implements Initializable {
 
     @FXML
     ListView ProductionPlan;
+
+    @FXML
+    ListView Costs;
 
 
     @Override
@@ -59,7 +60,6 @@ public class GuiController implements Initializable {
 
                     Time.setText("Day: " + day + " (" + seconds + "s)");
                     NumberOfOrders.setText("(" + MPS.numberOfOrders() + ")");
-                    Tc.setText("Tc = " + MPS.getTc() + " €");
 
                     List<Order> orders = MPS.getOrders();
 
@@ -104,6 +104,14 @@ public class GuiController implements Initializable {
                         ProductionPlan.getItems().add("Day: " + i + "-" + currentDay.production());
                     }
 
+                    // List<Order> orders = MPS.getOrders();
+                    Costs.getItems().clear();
+                    for(Order order : orders){
+                        Costs.getItems().add("Order Number: " + order.getOrderNumber() +
+                                " Pc = " + order.Pc() +
+                                " Dc = " + order.Dc() +
+                                " Tc = " + order.Tc());
+                    }
                 })
         );
         timeline.setCycleCount(Timeline.INDEFINITE);
