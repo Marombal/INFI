@@ -65,7 +65,7 @@
       </Label>
       <Line endX="1277.0" endY="-21.10247802734375" layoutX="123.0" layoutY="192.0" startX="-122.9999771118164" startY="-21.10247802734375" />
       <Line endX="60.0" endY="458.00006103515625" layoutX="740.0" layoutY="342.0" startX="60.00006103515625" startY="-171.6024627685547" />
-      <ListView fx:id="Delivers" layoutX="33.0" layoutY="494.0" prefHeight="97.0" prefWidth="653.0" />
+      <ListView fx:id="DeliveringPlan" layoutX="33.0" layoutY="494.0" prefHeight="97.0" prefWidth="653.0" />
       <ListView fx:id="PurchasingPlan" layoutX="33.0" layoutY="658.0" prefHeight="105.0" prefWidth="666.0" />
    </children>
 </AnchorPane>

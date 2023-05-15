@@ -115,6 +115,10 @@ public class MPS extends Thread{
         return purchasingOrders;
     }
 
+    public static List<DeliveringOrder> getDeliveringOrders() {
+        return deliveringOrders;
+    }
+
     public static int DaysToCompleteTransformation;
     public static int NumberOfDeliveringDays;
 
@@ -122,6 +126,8 @@ public class MPS extends Thread{
     public static List<Integer> delivering_days = new ArrayList<Integer>();
 
     static List<PurchasingOrder> purchasingOrders = new ArrayList<>();
+
+    static List<DeliveringOrder> deliveringOrders = new ArrayList<>();
     public static void updateMPS(){
         if(orders == null) return;
 
@@ -248,6 +254,9 @@ public class MPS extends Thread{
 
         daysClass[delivering_day].setDeliverQuantity(delivering_quantity);      // 4.
         daysClass[delivering_day].setDeliverPiece(delivering_piece);            // 4.
+
+        DeliveringOrder deliveringOrder1 = new DeliveringOrder(delivering_day, delivering_piece, quantity);
+        deliveringOrders.add(deliveringOrder1);
 
         // Production Plan
         /*

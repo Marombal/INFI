@@ -38,7 +38,7 @@ public class GuiController implements Initializable {
     ListView OrdersList;
 
     @FXML
-    ListView Delivers;
+    ListView DeliveringPlan;
 
     @FXML
     ListView PurchasingPlan;
@@ -91,11 +91,6 @@ public class GuiController implements Initializable {
                         OrderInfo.clear();
                     }
 
-                    assert orders != null;
-                    Delivers.getItems().clear();
-                    for(Order order : orders){
-                        Delivers.getItems().add("Order: " + order.getOrderNumber() + order.getDeliveries());
-                    }
 
                     List<PurchasingOrder> PurchasingOrders = MPS.getPurchasingOrders();
                     PurchasingPlan.getItems().clear();
@@ -106,6 +101,16 @@ public class GuiController implements Initializable {
                                 " of Piece: " + purchasingOrder.WorkPiece +
                                 " ordered in day: " + purchasingOrder.purchasing_day;
                         PurchasingPlan.getItems().add(porder);
+                    }
+
+                    List<DeliveringOrder> DeliveringOrders = MPS.getDeliveringOrders();
+                    DeliveringPlan.getItems().clear();
+                    for (DeliveringOrder deliveringOrder : DeliveringOrders) {
+                        // System.out.println(plan.Supplier + " - " + plan.quantity + " - " + plan.purchasing_day);
+                        String dorder = "Day: " + deliveringOrder.Day +
+                                " Quantity: " + deliveringOrder.Quantity +
+                                " of Piece: " + deliveringOrder.WorkPiece;
+                        DeliveringPlan.getItems().add(dorder);
                     }
 
                 })
