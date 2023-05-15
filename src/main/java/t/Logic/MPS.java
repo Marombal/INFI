@@ -255,7 +255,7 @@ public class MPS extends Thread{
         daysClass[delivering_day].setDeliverQuantity(delivering_quantity);      // 4.
         daysClass[delivering_day].setDeliverPiece(delivering_piece);            // 4.
 
-        DeliveringOrder deliveringOrder1 = new DeliveringOrder(delivering_day, delivering_piece, quantity);
+        DeliveringOrder deliveringOrder1 = new DeliveringOrder(delivering_day, delivering_piece, quantity, OrderTest.getOrderNumber());
         deliveringOrders.add(deliveringOrder1);
 
         // Production Plan

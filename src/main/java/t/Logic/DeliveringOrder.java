@@ -5,9 +5,14 @@ public class DeliveringOrder {
     public String WorkPiece;
     public int Quantity;
 
-    DeliveringOrder(int d, String wp, int q){
+    public String Client;
+
+    public String OrderNumber;
+
+    DeliveringOrder(int d, String wp, int q, String n){
         this.Day = d;
         this.WorkPiece = wp;
         this.Quantity = q;
+        this.OrderNumber = n;
     }
 }

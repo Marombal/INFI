@@ -32,9 +32,6 @@ public class GuiController implements Initializable {
     @FXML
     Label ProcessingOrder;
     @FXML
-    TextArea OrderInfo;
-
-    @FXML
     ListView OrdersList;
 
     @FXML
@@ -42,6 +39,9 @@ public class GuiController implements Initializable {
 
     @FXML
     ListView PurchasingPlan;
+
+    @FXML
+    ListView ProductionPlan;
 
 
     @Override
@@ -71,25 +71,7 @@ public class GuiController implements Initializable {
                     }
 
                     /* MPS Processing */
-                    //MPS.updateMPS();MPS.updateMPS2();
 
-                    if(MPS.ProcessingOrder != null){
-                        ProcessingOrder.setText("Processing Order nº " + MPS.ProcessingOrder.getOrderNumber());
-                        OrderInfo.setText("Days to complete Transformation: " + MPS.DaysToCompleteTransformation
-                                + "\nNumber of Delivering Days: " + MPS.NumberOfDeliveringDays);
-
-
-                        List<String> delivering_days = new ArrayList<String>();
-                        for (int number : MPS.delivering_days) {
-                            String day = "Day " + number;
-                            delivering_days.add(day);
-                        }
-
-                    }
-                    else {
-                        ProcessingOrder.setText("Processing Order nº ");
-                        OrderInfo.clear();
-                    }
 
 
                     List<PurchasingOrder> PurchasingOrders = MPS.getPurchasingOrders();
@@ -109,8 +91,17 @@ public class GuiController implements Initializable {
                         // System.out.println(plan.Supplier + " - " + plan.quantity + " - " + plan.purchasing_day);
                         String dorder = "Day: " + deliveringOrder.Day +
                                 " Quantity: " + deliveringOrder.Quantity +
-                                " of Piece: " + deliveringOrder.WorkPiece;
+                                " of Piece: " + deliveringOrder.WorkPiece +
+                                " from order: " + deliveringOrder.OrderNumber;
                         DeliveringPlan.getItems().add(dorder);
+                    }
+
+                    Day[] days = MPS.daysClass;
+                    ProductionPlan.getItems().clear();
+                    for (int i = 0; i < days.length; i++) {
+                        Day currentDay = days[i];
+                        // Do something with the currentDay object
+                        ProductionPlan.getItems().add("Day: " + i + "-" + currentDay.production());
                     }
 
                 })

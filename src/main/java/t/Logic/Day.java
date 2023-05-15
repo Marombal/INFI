@@ -375,4 +375,32 @@ public class Day implements Cloneable{
 
         return -1;
     }
+
+    public String production(){
+        String Production = "";
+
+        if(productionP3 > 0){
+            Production = Production + " P3:" + productionP3;
+        }
+        if(productionP4 > 0){
+            Production = Production + " P4:" + productionP4;
+        }
+        if(productionP5 > 0){
+            Production = Production + " P5:" + productionP5;
+        }
+        if(productionP6 > 0){
+            Production = Production + " P6:" + productionP6;
+        }
+        if(productionP7 > 0){
+            Production = Production + " P7:" + productionP7;
+        }
+        if(productionP8 > 0){
+            Production = Production + " P8:" + productionP8;
+        }
+        if(productionP9 > 0){
+            Production = Production + " P9:" + productionP9;
+        }
+
+        return Production;
+    }
 }

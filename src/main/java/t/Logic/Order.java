@@ -18,6 +18,8 @@ public class Order {
     //private String Number;
     private String State;
 
+    private int Ad;
+
     private List<Deliver> delivers = new ArrayList<>();
 
     Order(){}
@@ -66,6 +68,10 @@ public class Order {
 
     public void setStartDate(int startDate) {
         StartDate = startDate;
+    }
+
+    public void setAd(int ad) {
+        Ad = ad;
     }
 
     public void addDeliver(Deliver e){
@@ -129,12 +135,12 @@ public class Order {
     public String toString(){
 
         return "Number: " + this.OrderNumber
-                + "WorkPiece: " + this.WorkPiece
-                + "Quantity: " + this.Quantity
-                + "DueDate: " + this.DueDate
-                + "LatePen: " + this.LatePen
-                + "EarlyPen: " + this.EarlyPen
-                + "State: " + this.State;
+                + " WorkPiece: " + this.WorkPiece
+                + " Quantity: " + this.Quantity
+                + " DueDate: " + this.DueDate
+                + " LatePen: " + this.LatePen
+                + " EarlyPen: " + this.EarlyPen
+                + " State: " + this.State;
     }
 
     public void InsertOrderInDB(){
@@ -262,6 +268,34 @@ public class Order {
         else if(Objects.equals(WorkPiece, "P9")) return 3;
 
         return -1;
+    }
+
+    public float Rc(){
+        float Rc;
+        if(Objects.equals(RawMaterial(), "P1")){
+            Rc = Integer.parseInt(Quantity) * 55;
+        }
+        else{
+            Rc = Integer.parseInt(Quantity) * 18;
+        }
+
+        return Rc;
+    }
+
+    public float Dc(){
+        float Dc;
+
+        Dc = (float) (Rc() * (StartDate - RealDueDate) * 0.01);
+
+        return Dc;
+    }
+
+    public float Pc(){
+        return 0;
+    }
+
+    public float Tc(){
+        return Rc() + Dc() + Pc();
     }
 
 }
