@@ -1,11 +1,15 @@
 package t.Logic;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 
 import javafx.animation.KeyFrame;
@@ -28,6 +32,12 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
         stage.setResizable(false);
+
+        stage.setOnCloseRequest(event -> {
+            event.consume();
+            exit(stage);
+        });
+
     }
 
     public static void main(String[] args) {
@@ -54,4 +64,46 @@ public class Main extends Application {
         /* Launch GUI */
         launch();
     }
+
+    public void exit(Stage stage){
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Exit Discordando");
+        alert.setHeaderText("EXIT DiscordandoMusic");
+        alert.setContentText("Do you want to exit DiscordandoMusic?");
+
+        ButtonType saveAndExitButton = new ButtonType("Save and Exit");
+        ButtonType clearAndExitButton = new ButtonType("Clear and Exit");
+        ButtonType cancelButton = ButtonType.CANCEL;
+
+        alert.getButtonTypes().setAll(saveAndExitButton, clearAndExitButton, cancelButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent()) {
+            if (result.get() == saveAndExitButton) {
+                saveState();
+                exitApplication();
+            } else if (result.get() == clearAndExitButton) {
+                clearInformation();
+                exitApplication();
+            }
+        }
+    }
+    private void saveState() {
+        // Implement the logic to save the state of the factory production
+    }
+
+    private void clearInformation() {
+        // Implement the logic to clear all information
+    }
+
+    private void exitApplication() {
+        //stage = (Stage) Pane.getScene().getWindow();
+        System.out.println("EXIT");
+        //stage.close();
+        Platform.exit(); // Shutdown the application
+        System.exit(0); // Ensure the program terminates
+    }
+
 }

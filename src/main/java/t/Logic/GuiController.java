@@ -2,18 +2,23 @@ package t.Logic;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class GuiController implements Initializable {
@@ -43,6 +48,13 @@ public class GuiController implements Initializable {
 
     @FXML
     ListView Costs;
+
+    @FXML
+    Button SaveExit;
+
+    @FXML
+    Button ClearExit;
+
 
 
     @Override
@@ -127,4 +139,56 @@ public class GuiController implements Initializable {
             items.add(newString);
         }
     }
+
+
+    private Stage stage;
+    private Parent root;
+    private Scene scene;
+    @FXML
+    AnchorPane Pane;
+
+
+    public void exit(ActionEvent e) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Exit Discordando");
+        alert.setHeaderText("EXIT DiscordandoMusic");
+        alert.setContentText("Do you want to exit DiscordandoMusic?");
+
+        ButtonType saveAndExitButton = new ButtonType("Save and Exit");
+        ButtonType clearAndExitButton = new ButtonType("Clear and Exit");
+        ButtonType cancelButton = ButtonType.CANCEL;
+
+        alert.getButtonTypes().setAll(saveAndExitButton, clearAndExitButton, cancelButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent()) {
+            if (result.get() == saveAndExitButton) {
+                saveState();
+                exitApplication();
+            } else if (result.get() == clearAndExitButton) {
+                clearInformation();
+                exitApplication();
+            }
+        }
+    }
+
+    private void saveState() {
+        // Implement the logic to save the state of the factory production
+    }
+
+    private void clearInformation() {
+        // Implement the logic to clear all information
+    }
+
+    private void exitApplication() {
+        stage = (Stage) Pane.getScene().getWindow();
+        System.out.println("EXIT");
+        stage.close();
+        Platform.exit(); // Shutdown the application
+        System.exit(0); // Ensure the program terminates
+    }
+
+
+
 }
