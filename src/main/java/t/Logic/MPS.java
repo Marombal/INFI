@@ -437,7 +437,16 @@ public class MPS extends Thread{
 
         order.setStartDate(purchase_deliver);
 
+        // TEST
+        //DataBase.insertMPS(3, daysClass[3].getComingP1(), daysClass[3].getComingP2(),
+        //        daysClass[3].getProductionP3(), daysClass[3].getProductionP4(), daysClass[3].getProductionP5(), daysClass[3].getProductionP6(), daysClass[3].getProductionP7(), daysClass[3].getProductionP8(), daysClass[3].getProductionP9(),
+        //        daysClass[3].getDeliverP3(), daysClass[3].getDeliverP4(), daysClass[3].getDeliverP5(),daysClass[3].getDeliverP6(),daysClass[3].getDeliverP7(),daysClass[3].getDeliverP8(),daysClass[3].getDeliverP9());
 
+
+        // saveMPS();
+        DataBase.deleteMPS();
+        DataBase.insertMPSBatch(daysClass);
+        System.out.println("Updating MPS-DB");
     }
 
     private static int checkTime(Order order) throws CloneNotSupportedException {
@@ -766,6 +775,15 @@ public class MPS extends Thread{
                 stockClass[i].subP2(P2);
             }
         }
+    }
+
+    private static void saveMPS(){
+        for (int i = 0; i < daysClass.length; i++) {
+            DataBase.insertMPS(i, daysClass[i].getComingP1(), daysClass[i].getComingP2(),
+                    daysClass[i].getProductionP3(), daysClass[i].getProductionP4(), daysClass[i].getProductionP5(), daysClass[i].getProductionP6(), daysClass[i].getProductionP7(), daysClass[i].getProductionP8(), daysClass[i].getProductionP9(),
+                    daysClass[i].getDeliverP3(), daysClass[i].getDeliverP4(), daysClass[i].getDeliverP5(), daysClass[i].getDeliverP6(), daysClass[i].getDeliverP7(), daysClass[i].getDeliverP8(), daysClass[i].getDeliverP9());
+        }
+
     }
 
 }

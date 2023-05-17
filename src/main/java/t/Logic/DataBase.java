@@ -148,5 +148,85 @@ public class DataBase {
         return -1;
     }
 
+    public static int deleteMPS() {
+        // DELETE FROM table_name;
+        numberOfDataBaseQuerys++;
+        String query = "DELETE FROM \"infi\".\"MPS\";";
+        try (Connection conn = DriverManager.getConnection(db_url, db_user, passwd);) {
+
+            Statement stmt = conn.createStatement();
+            int res = stmt.executeUpdate(query);
+
+            if (res == 0) return 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+
+        return 1;
+    }
+
+    public static void insertMPS(int day, int cP1, int cP2, int pP3, int pP4, int pP5, int pP6, int pP7, int pP8, int pP9, int d3, int d4, int d5, int d6, int d7, int d8, int d9){
+        numberOfDataBaseQuerys++;
+        // Connect to the DBMS (DataBase Management Server)
+        String query = "INSERT INTO \"infi\".\"MPS\" (\"day\", \"comingP1\", \"comingP2\", " +
+                "\"productionP3\", \"productionP4\", \"productionP5\", \"productionP6\", \"productionP7\", \"productionP8\", \"productionP9\", " +
+                "\"deliverP3\", \"deliverP4\", \"deliverP5\", \"deliverP6\", \"deliverP7\", \"deliverP8\", \"deliverP9\") " +
+                "VALUES (" + day + ", " + cP1 + ", " + cP2 + ", " +
+                pP3 + ", " + pP4 + ", " + pP5 + ", " + pP6 + ", " + pP7 + ", " + pP8 + ", " + pP9 + ", " +
+                d3 + ", " + d4 + ", " + d5 + ", " + d6 + ", " + d7 + ", " + d8 + ", " + d9 + ");";
+
+
+        //System.out.println(query);
+
+        try(Connection conn = DriverManager.getConnection(db_url, db_user, passwd);) {
+
+            Statement stmt = conn.createStatement();
+            int res = stmt.executeUpdate(query);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void insertMPSBatch(Day[] daysClass) {
+        numberOfDataBaseQuerys++;
+        String query = "INSERT INTO \"infi\".\"MPS\" (\"day\", \"comingP1\", \"comingP2\", " +
+                "\"productionP3\", \"productionP4\", \"productionP5\", \"productionP6\", \"productionP7\", \"productionP8\", \"productionP9\", " +
+                "\"deliverP3\", \"deliverP4\", \"deliverP5\", \"deliverP6\", \"deliverP7\", \"deliverP8\", \"deliverP9\") " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(db_url, db_user, passwd);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            for (Day day : daysClass) {
+                stmt.setInt(1, day.getDay());
+                stmt.setInt(2, day.getComingP1());
+                stmt.setInt(3, day.getComingP2());
+                stmt.setInt(4, day.getProductionP3());
+                stmt.setInt(5, day.getProductionP4());
+                stmt.setInt(6, day.getProductionP5());
+                stmt.setInt(7, day.getProductionP6());
+                stmt.setInt(8, day.getProductionP7());
+                stmt.setInt(9, day.getProductionP8());
+                stmt.setInt(10, day.getProductionP9());
+                stmt.setInt(11, day.getDeliverP3());
+                stmt.setInt(12, day.getDeliverP4());
+                stmt.setInt(13, day.getDeliverP5());
+                stmt.setInt(14, day.getDeliverP6());
+                stmt.setInt(15, day.getDeliverP7());
+                stmt.setInt(16, day.getDeliverP8());
+                stmt.setInt(17, day.getDeliverP9());
+                stmt.addBatch();
+            }
+
+            stmt.executeBatch();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

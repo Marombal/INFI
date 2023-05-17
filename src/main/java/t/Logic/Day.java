@@ -100,6 +100,34 @@ public class Day implements Cloneable{
         return typesDeliver;
     }
 
+    public int getDeliverP3() {
+        return deliverP3;
+    }
+
+    public int getDeliverP4() {
+        return deliverP4;
+    }
+
+    public int getDeliverP5() {
+        return deliverP5;
+    }
+
+    public int getDeliverP6() {
+        return deliverP6;
+    }
+
+    public int getDeliverP7() {
+        return deliverP7;
+    }
+
+    public int getDeliverP8() {
+        return deliverP8;
+    }
+
+    public int getDeliverP9() {
+        return deliverP9;
+    }
+
     public void setComingP1(int comingP1) {
         this.comingP1 = comingP1;
     }
