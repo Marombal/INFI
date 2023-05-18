@@ -191,6 +191,7 @@ public class GuiController implements Initializable {
         // Implement the logic to clear all information
         System.out.println("deleteMPS");
         DataBase.deleteMPS();
+        DataBase.insertTime(0,0);
     }
 
     private void exitApplication() {
