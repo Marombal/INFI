@@ -152,6 +152,34 @@ public class Day implements Cloneable{
         this.virtualStock = virtualStock;
     }
 
+    public void setDeliverP3(int deliverP3) {
+        this.deliverP3 = deliverP3;
+    }
+
+    public void setDeliverP4(int deliverP4) {
+        this.deliverP4 = deliverP4;
+    }
+
+    public void setDeliverP5(int deliverP5) {
+        this.deliverP5 = deliverP5;
+    }
+
+    public void setDeliverP6(int deliverP6) {
+        this.deliverP6 = deliverP6;
+    }
+
+    public void setDeliverP7(int deliverP7) {
+        this.deliverP7 = deliverP7;
+    }
+
+    public void setDeliverP8(int deliverP8) {
+        this.deliverP8 = deliverP8;
+    }
+
+    public void setDeliverP9(int deliverP9) {
+        this.deliverP9 = deliverP9;
+    }
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();

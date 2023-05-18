@@ -228,5 +228,100 @@ public class DataBase {
         }
     }
 
+    //SELECT * FROM "infi"."MPS" WHERE day = 1;
+    public static int[] selectDay(int day){
+        numberOfDataBaseQuerys++;
+        String query  = "SELECT * FROM \"infi\".\"MPS\" WHERE day = " + day + ";";
+
+        int[] dayData = new int[17];
+        // Connect to the DBMS (DataBase Management Server)
+        try(Connection conn = DriverManager.getConnection(db_url, db_user, passwd);
+            // Execute an SQL statement
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);) {
+            // Analyse the resulting data
+            while (rs.next()) {
+                dayData[0] = rs.getInt("day");
+                dayData[1] = rs.getInt("comingP1");
+                dayData[2] = rs.getInt("comingP2");
+                dayData[3] = rs.getInt("productionP3");
+                dayData[4] = rs.getInt("productionP4");
+                dayData[5] = rs.getInt("productionP5");
+                dayData[6] = rs.getInt("productionP6");
+                dayData[7] = rs.getInt("productionP7");
+                dayData[8] = rs.getInt("productionP8");
+                dayData[9] = rs.getInt("productionP9");
+                dayData[10] = rs.getInt("deliverP3");
+                dayData[11] = rs.getInt("deliverP4");
+                dayData[12] = rs.getInt("deliverP5");
+                dayData[13] = rs.getInt("deliverP6");
+                dayData[14] = rs.getInt("deliverP7");
+                dayData[15] = rs.getInt("deliverP8");
+                dayData[16] = rs.getInt("deliverP9");
+                return dayData;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return null;
+    }
+
+    public static void insertTime(int day, int sec) {
+        numberOfDataBaseQuerys++;
+
+        // Connect to the DBMS (DataBase Management Server)
+        String deleteQuery = "DELETE FROM infi.time;";
+        String insertQuery = "INSERT INTO infi.time (day, sec) VALUES (" + day + ", " + sec + ");";
+
+        try (Connection conn = DriverManager.getConnection(db_url, db_user, passwd);
+             Statement stmt = conn.createStatement()) {
+
+            stmt.executeUpdate(deleteQuery);
+            stmt.executeUpdate(insertQuery);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int getDay(){
+        numberOfDataBaseQuerys++;
+        String query  = "SELECT day FROM infi.time;";
+        // Connect to the DBMS (DataBase Management Server)
+        try(Connection conn = DriverManager.getConnection(db_url, db_user, passwd);
+            // Execute an SQL statement
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);) {
+            // Analyse the resulting data
+            while (rs.next()) {
+                return rs.getInt("day");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        return 0;
+    }
+
+    public static int getSec(){
+        numberOfDataBaseQuerys++;
+        String query  = "SELECT sec FROM infi.time;";
+        // Connect to the DBMS (DataBase Management Server)
+        try(Connection conn = DriverManager.getConnection(db_url, db_user, passwd);
+            // Execute an SQL statement
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);) {
+            // Analyse the resulting data
+            while (rs.next()) {
+                return rs.getInt("sec");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        return 0;
+    }
+
 
 }

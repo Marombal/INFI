@@ -26,6 +26,7 @@ public class MPS extends Thread{
     public static Order ProcessingOrder = null;
 
     public static int Today = 0;
+    public static int Seconds = 0;
 
     public static Day[] daysClass = new Day[100];
     public static Stock[] stockClass = new Stock[100];
@@ -49,6 +50,26 @@ public class MPS extends Thread{
         for (int i = 0; i < 100; i++) {
             daysClass[i] = new Day(i);
             stockClass[i] = new Stock(i);
+
+            int[] data = DataBase.selectDay(i);
+            if(data != null){
+                daysClass[i].setComingP1(data[1]);
+                daysClass[i].setComingP2(data[2]);
+                daysClass[i].setProductionP3(data[3]);
+                daysClass[i].setProductionP4(data[4]);
+                daysClass[i].setProductionP5(data[5]);
+                daysClass[i].setProductionP6(data[6]);
+                daysClass[i].setProductionP7(data[7]);
+                daysClass[i].setProductionP8(data[8]);
+                daysClass[i].setProductionP9(data[9]);
+                daysClass[i].setDeliverP3(data[10]);
+                daysClass[i].setDeliverP4(data[11]);
+                daysClass[i].setDeliverP5(data[12]);
+                daysClass[i].setDeliverP6(data[13]);
+                daysClass[i].setDeliverP7(data[14]);
+                daysClass[i].setDeliverP8(data[15]);
+                daysClass[i].setDeliverP9(data[16]);
+            }
         }
     }
 
@@ -437,13 +458,7 @@ public class MPS extends Thread{
 
         order.setStartDate(purchase_deliver);
 
-        // TEST
-        //DataBase.insertMPS(3, daysClass[3].getComingP1(), daysClass[3].getComingP2(),
-        //        daysClass[3].getProductionP3(), daysClass[3].getProductionP4(), daysClass[3].getProductionP5(), daysClass[3].getProductionP6(), daysClass[3].getProductionP7(), daysClass[3].getProductionP8(), daysClass[3].getProductionP9(),
-        //        daysClass[3].getDeliverP3(), daysClass[3].getDeliverP4(), daysClass[3].getDeliverP5(),daysClass[3].getDeliverP6(),daysClass[3].getDeliverP7(),daysClass[3].getDeliverP8(),daysClass[3].getDeliverP9());
 
-
-        // saveMPS();
         DataBase.deleteMPS();
         DataBase.insertMPSBatch(daysClass);
         System.out.println("Updating MPS-DB");

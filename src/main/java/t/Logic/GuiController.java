@@ -59,6 +59,10 @@ public class GuiController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        day = DataBase.getDay();
+        seconds = DataBase.getSec();
+
+
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), event -> {
                     seconds++;
@@ -67,7 +71,13 @@ public class GuiController implements Initializable {
                         seconds = 0;
                         day++;
                         MPS.Today = day;
-
+                    }
+                    MPS.Seconds = seconds;
+                    if (seconds % 10 == 0) {
+                        // The value of 'seconds' is a multiple of 10
+                        // Add your desired code here
+                        DataBase.insertTime(day, seconds);
+                        System.out.println("Update DB timers (nº of queries " + DataBase.numberOfDataBaseQuerys + ")");
                     }
 
                     Time.setText("Day: " + day + " (" + seconds + "s)");
