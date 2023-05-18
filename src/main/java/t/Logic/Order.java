@@ -34,6 +34,18 @@ public class Order {
         this.State = state;
     }
 
+    Order(String client,String number, String WP, String q, String DD, String LP, String EP, String state, String realduedate){
+        this.Client = client;
+        this.OrderNumber = number;
+        this.WorkPiece = WP;
+        this.Quantity = q;
+        this.DueDate = DD;
+        this.LatePen = LP;
+        this.EarlyPen = EP;
+        this.State = state;
+        this.RealDueDate = Integer.parseInt(realduedate);
+    }
+
     public void setQuantity(String quantity) {
         Quantity = quantity;
     }

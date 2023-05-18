@@ -50,6 +50,7 @@ public class MPS extends Thread{
 
         int[][] data = DataBase.selectAllDays();
         orders = DataBase.loadAllOrders();
+        deliveringOrders = calculateDOrders();
 
 
         for (int i = 0; i < 100; i++) {
@@ -86,6 +87,24 @@ public class MPS extends Thread{
         }
         return clonedDaysClass;
     }
+
+    private static List<DeliveringOrder> calculateDOrders() {
+        List<DeliveringOrder> deliveringOrders = new ArrayList<>();
+
+        for (Order order : orders) {
+            System.out.println(order.getRealDueDate());
+            DeliveringOrder deliveringOrder = new DeliveringOrder(order.getRealDueDate(),
+                    order.getWorkPiece(),
+                    Integer.parseInt(order.getQuantity()),
+                    order.getOrderNumber(),
+                    order.getClient());
+
+            deliveringOrders.add(deliveringOrder);
+        }
+
+        return deliveringOrders;
+    }
+
 
 
     public static void print20days(){
@@ -209,7 +228,7 @@ public class MPS extends Thread{
         int delivering_day = checkTime(order);
 
         order.setRealDueDate(delivering_day);
-
+        //System.out.println("BSJADSABKJADBKJASDBJKADBJK     " + delivering_day);
 
         // This function will process one and only one order
         Order OrderTest = order;
@@ -415,7 +434,7 @@ public class MPS extends Thread{
 
         order.setStartDate(purchase_deliver);
 
-
+        DataBase.updateOrder(Integer.toString(OrderTest.getRealDueDate()), OrderTest.getOrderNumber());
         DataBase.deleteMPS();
         DataBase.insertMPSBatch(daysClass);
         System.out.println("Updating MPS-DB");

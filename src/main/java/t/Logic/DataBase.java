@@ -77,8 +77,9 @@ public class DataBase {
                 String earlyPen = rs.getString("earlypen");
                 String latePen = rs.getString("latepen");
                 String state = rs.getString("state");
+                String realduedate = rs.getString("realduedate");
 
-                Order order = new Order(name, orderNumber, workPiece, quantity, dueDate, latePen, earlyPen, state);
+                Order order = new Order(name, orderNumber, workPiece, quantity, dueDate, latePen, earlyPen, state, realduedate);
                 orders.add(order);
             }
 
@@ -125,24 +126,20 @@ public class DataBase {
         }
     }
 
-    public static int updateOrder(String Number, boolean done){
+    public static void updateOrder(String realduedate, String Number){
         numberOfDataBaseQuerys++;
         // Connect to the DBMS (DataBase Management Server)
-        String query = "UPDATE infi.orders " + "SET done = '" + done + "' " + "WHERE number = '" + Number + "';";
+        String query = "UPDATE infi.orders " + "SET realduedate = '" + realduedate + "' " + "WHERE number = '" + Number + "';";
 
         try(Connection conn = DriverManager.getConnection(db_url, db_user, passwd);) {
 
             Statement stmt = conn.createStatement();
-            int res = stmt.executeUpdate(query);
+            stmt.executeUpdate(query);
 
-            if(res == 0 ) return 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return -1;
         }
-
-        return 1;
     }
 
     public static List<Order> uploadUnfinishedOrders(){
