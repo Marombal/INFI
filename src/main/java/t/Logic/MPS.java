@@ -127,10 +127,9 @@ public class MPS extends Thread{
         }
     }
 
-    public static String sendTodayMPS(){
-        String PPS = "A" + "0" + "0" + "D" + "0" + "0" + "P" + "0" + "0" + "0";
-
-        return PPS;
+    public static void sendTodayMPS(){
+        System.out.println("Sending Daily Planing");
+        TCPSender.sendString(daysClass[Today].sendDay());
     }
 
     public static float getTc(){

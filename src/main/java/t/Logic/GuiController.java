@@ -71,6 +71,8 @@ public class GuiController implements Initializable {
                         seconds = 0;
                         day++;
                         MPS.Today = day;
+
+                        MPS.sendTodayMPS();
                     }
                     MPS.Seconds = seconds;
                     if (seconds % 10 == 0) {
