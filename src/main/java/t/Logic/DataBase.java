@@ -78,8 +78,10 @@ public class DataBase {
                 String latePen = rs.getString("latepen");
                 String state = rs.getString("state");
                 String realduedate = rs.getString("realduedate");
+                String pd = rs.getString("purchasing_day");
+                String pq = rs.getString("purchasing_quantity");
 
-                Order order = new Order(name, orderNumber, workPiece, quantity, dueDate, latePen, earlyPen, state, realduedate);
+                Order order = new Order(name, orderNumber, workPiece, quantity, dueDate, latePen, earlyPen, state, realduedate, pd, pq);
                 orders.add(order);
             }
 
@@ -126,10 +128,26 @@ public class DataBase {
         }
     }
 
-    public static void updateOrder(String realduedate, String Number){
+    public static void updateOrderRealDueDate(String realduedate, String Number){
         numberOfDataBaseQuerys++;
         // Connect to the DBMS (DataBase Management Server)
         String query = "UPDATE infi.orders " + "SET realduedate = '" + realduedate + "' " + "WHERE number = '" + Number + "';";
+
+        try(Connection conn = DriverManager.getConnection(db_url, db_user, passwd);) {
+
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateOrderPurchasing(String pday, String pquant,String Number){
+        numberOfDataBaseQuerys++;
+        // Connect to the DBMS (DataBase Management Server)
+        String query = "UPDATE infi.orders " + "SET purchasing_quantity = '" + pquant + "', purchasing_day ='" + pday + "' WHERE number = '" + Number + "';";
 
         try(Connection conn = DriverManager.getConnection(db_url, db_user, passwd);) {
 

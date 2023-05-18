@@ -15,8 +15,12 @@ public class Order {
     private int RealDueDate;
     private int StartDate;
     private String Client = "????";
-    //private String Number;
+
     private String State;
+
+    private String purchasing_day;
+
+    private String purchasing_quantity;
 
     private int Ad;
 
@@ -44,6 +48,20 @@ public class Order {
         this.EarlyPen = EP;
         this.State = state;
         this.RealDueDate = Integer.parseInt(realduedate);
+    }
+
+    Order(String client,String number, String WP, String q, String DD, String LP, String EP, String state, String realduedate, String pd, String pq){
+        this.Client = client;
+        this.OrderNumber = number;
+        this.WorkPiece = WP;
+        this.Quantity = q;
+        this.DueDate = DD;
+        this.LatePen = LP;
+        this.EarlyPen = EP;
+        this.State = state;
+        this.RealDueDate = Integer.parseInt(realduedate);
+        this.purchasing_day = pd;
+        this.purchasing_quantity = pq;
     }
 
     public void setQuantity(String quantity) {
@@ -90,6 +108,13 @@ public class Order {
         Ad = ad;
     }
 
+    public void setPurchasing_day(String purchasing_day) {
+        this.purchasing_day = purchasing_day;
+    }
+
+    public void setPurchasing_quantity(String purchasing_quantity) {
+        this.purchasing_quantity = purchasing_quantity;
+    }
 
     public String getDueDate() {
         return DueDate;
@@ -116,6 +141,14 @@ public class Order {
 
     public String getClient() {
         return Client;
+    }
+
+    public String getPurchasing_day() {
+        return purchasing_day;
+    }
+
+    public String getPurchasing_quantity() {
+        return purchasing_quantity;
     }
 
     public void printOrder(){
