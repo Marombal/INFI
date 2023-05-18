@@ -47,29 +47,34 @@ public class MPS extends Thread{
 
 
     public void SetupMPS(){
+
+        int[][] data = DataBase.selectAllDays();
+        //List<int[]> allDaysData = DataBase.selectAllDays2();
+
         for (int i = 0; i < 100; i++) {
             daysClass[i] = new Day(i);
             stockClass[i] = new Stock(i);
 
-            int[] data = DataBase.selectDay(i);
+            //int[] data = DataBase.selectDay(i);
             if(data != null){
-                daysClass[i].setComingP1(data[1]);
-                daysClass[i].setComingP2(data[2]);
-                daysClass[i].setProductionP3(data[3]);
-                daysClass[i].setProductionP4(data[4]);
-                daysClass[i].setProductionP5(data[5]);
-                daysClass[i].setProductionP6(data[6]);
-                daysClass[i].setProductionP7(data[7]);
-                daysClass[i].setProductionP8(data[8]);
-                daysClass[i].setProductionP9(data[9]);
-                daysClass[i].setDeliverP3(data[10]);
-                daysClass[i].setDeliverP4(data[11]);
-                daysClass[i].setDeliverP5(data[12]);
-                daysClass[i].setDeliverP6(data[13]);
-                daysClass[i].setDeliverP7(data[14]);
-                daysClass[i].setDeliverP8(data[15]);
-                daysClass[i].setDeliverP9(data[16]);
+                daysClass[i].setComingP1(data[i][1]);
+                daysClass[i].setComingP2(data[i][2]);
+                daysClass[i].setProductionP3(data[i][3]);
+                daysClass[i].setProductionP4(data[i][4]);
+                daysClass[i].setProductionP5(data[i][5]);
+                daysClass[i].setProductionP6(data[i][6]);
+                daysClass[i].setProductionP7(data[i][7]);
+                daysClass[i].setProductionP8(data[i][8]);
+                daysClass[i].setProductionP9(data[i][9]);
+                daysClass[i].setDeliverP3(data[i][10]);
+                daysClass[i].setDeliverP4(data[i][11]);
+                daysClass[i].setDeliverP5(data[i][12]);
+                daysClass[i].setDeliverP6(data[i][13]);
+                daysClass[i].setDeliverP7(data[i][14]);
+                daysClass[i].setDeliverP8(data[i][15]);
+                daysClass[i].setDeliverP9(data[i][16]);
             }
+
         }
     }
 
@@ -275,6 +280,8 @@ public class MPS extends Thread{
 
         daysClass[delivering_day].setDeliverQuantity(delivering_quantity);      // 4.
         daysClass[delivering_day].setDeliverPiece(delivering_piece);            // 4.
+
+        daysClass[delivering_day].addDelivering(delivering_quantity, delivering_piece);
 
         DeliveringOrder deliveringOrder1 = new DeliveringOrder(delivering_day, delivering_piece, quantity, OrderTest.getOrderNumber());
         deliveringOrders.add(deliveringOrder1);

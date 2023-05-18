@@ -267,6 +267,83 @@ public class DataBase {
         return null;
     }
 
+    public static int[][] selectAllDays() {
+        numberOfDataBaseQuerys++;
+        String query = "SELECT * FROM \"infi\".\"MPS\";";
+
+        try (Connection conn = DriverManager.getConnection(db_url, db_user, passwd);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            // Get the number of columns
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            // Create a dynamic list to hold the rows temporarily
+            List<int[]> rowsList = new ArrayList<>();
+
+            // Iterate over the result set and store rows in the list
+            while (rs.next()) {
+                int[] rowData = new int[columnCount];
+                for (int col = 0; col < columnCount; col++) {
+                    rowData[col] = rs.getInt(col + 1);
+                }
+                rowsList.add(rowData);
+            }
+
+            // Check if the rowsList is empty and return null
+            if (rowsList.isEmpty()) {
+                return null;
+            }
+
+            // Convert the list to a two-dimensional array
+            int rowCount = rowsList.size();
+            int[][] dataRows = new int[rowCount][columnCount];
+            for (int i = 0; i < rowCount; i++) {
+                dataRows[i] = rowsList.get(i);
+            }
+
+            return dataRows;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+    public static List<int[]> selectAllDays2() {
+        numberOfDataBaseQuerys++;
+        String query = "SELECT * FROM \"infi\".\"MPS\";";
+
+        try (Connection conn = DriverManager.getConnection(db_url, db_user, passwd);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            List<int[]> dataRows = new ArrayList<>();
+
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            while (rs.next()) {
+                int[] rowData = new int[columnCount];
+                for (int col = 0; col < columnCount; col++) {
+                    rowData[col] = rs.getInt(col + 1);
+                }
+                dataRows.add(rowData);
+            }
+
+            return dataRows;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
     public static void insertTime(int day, int sec) {
         numberOfDataBaseQuerys++;
 

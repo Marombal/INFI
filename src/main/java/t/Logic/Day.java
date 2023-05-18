@@ -260,7 +260,7 @@ public class Day implements Cloneable{
             deliverP9 += quantity;
         }
 
-        countTypesProducing();
+        //countTypesProducing();
     }
 
     public void addComingP1(int comingP1) {
@@ -372,8 +372,16 @@ public class Day implements Cloneable{
         System.out.println("P9: " + this.productionP9);
 
         // Delivering
-        System.out.println("deliverQuantity: " + this.deliverQuantity);
-        System.out.println("deliverPiece:" + this.deliverPiece);
+        //System.out.println("deliverQuantity: " + this.deliverQuantity);
+        //System.out.println("deliverPiece:" + this.deliverPiece);
+        System.out.println("Delivering\n");
+        System.out.println("P3: " + this.deliverP3);
+        System.out.println("P4: " + this.deliverP4);
+        System.out.println("P5: " + this.deliverP5);
+        System.out.println("P6: " + this.deliverP6);
+        System.out.println("P7: " + this.deliverP7);
+        System.out.println("P8: " + this.deliverP8);
+        System.out.println("P9: " + this.deliverP9);
     }
 
     public String sendDay(){
@@ -386,11 +394,15 @@ public class Day implements Cloneable{
                 productionP3, productionP4, productionP5, productionP6, productionP7, productionP8, productionP9,
                 delivering_piece, deliverQuantity);
 
-        //System.out.println("DP - " + delivering_piece);
-        //System.out.println("DQ - " + deliverQuantity);
-        System.out.println(generatedString);
+        String generatedStringEz = String.format("D%dPU%d%dPR%d%d%d%d%d%d%dD%d%d%d%d%d%d%d",
+                day,
+                comingP1, comingP2,
+                productionP3, productionP4, productionP5, productionP6, productionP7, productionP8, productionP9,
+                deliverP3, deliverP4, deliverP5, deliverP6, deliverP7, deliverP8, deliverP9);
 
-        return generatedString;
+        //System.out.println(generatedStringEz);
+
+        return generatedStringEz;
     }
 
 
