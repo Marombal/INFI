@@ -24,7 +24,8 @@ public class Order {
 
     Order(){}
 
-    Order(String number, String WP, String q, String DD, String LP, String EP, String state){
+    Order(String client,String number, String WP, String q, String DD, String LP, String EP, String state){
+        this.Client = client;
         this.OrderNumber = number;
         this.WorkPiece = WP;
         this.Quantity = q;
@@ -68,6 +69,10 @@ public class Order {
 
     public void setStartDate(int startDate) {
         StartDate = startDate;
+    }
+
+    public void setClient(String client) {
+        Client = client;
     }
 
     public void setAd(int ad) {
@@ -134,13 +139,14 @@ public class Order {
 
     public String toString(){
 
-        return "Number: " + this.OrderNumber
+        return "Client: " + this.Client
+                + " Number: " + this.OrderNumber
                 + " WorkPiece: " + this.WorkPiece
                 + " Quantity: " + this.Quantity
                 + " DueDate: " + this.DueDate
                 + " LatePen: " + this.LatePen
-                + " EarlyPen: " + this.EarlyPen
-                + " State: " + this.State;
+                + " EarlyPen: " + this.EarlyPen;
+                //+ " State: " + this.State;
     }
 
     public void InsertOrderInDB(){

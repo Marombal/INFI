@@ -98,6 +98,7 @@ public class Main extends Application {
         // Implement the logic to clear all information
         System.out.println("deleteMPS");
         DataBase.deleteMPS();
+        DataBase.deleteOrders();
         DataBase.insertTime(0,0);
     }
 

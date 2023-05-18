@@ -8,7 +8,8 @@ public class DBUpdater extends Thread{
     public void run(){
 
         while(true){
-            List<Order> orders = DataBase.uploadUnfinishedOrders();
+            //List<Order> orders = DataBase.uploadUnfinishedOrders();
+            List<Order> orders = null;
             if(orders == null){
                 System.out.println("No Unfinished Orders to Load from DataBase");
             }else {
@@ -26,7 +27,8 @@ public class DBUpdater extends Thread{
 
 
     public static int LoadUnfinishedOrders(){
-        List<Order> orders = DataBase.uploadUnfinishedOrders();
+        // List<Order> orders = DataBase.uploadUnfinishedOrders();
+        List<Order> orders = null;
         if(orders == null){
             System.out.println("No Unfinished Orders to Load from DataBase");
             return -1;

@@ -80,6 +80,8 @@ public class GuiController implements Initializable {
                         // Add your desired code here
                         DataBase.insertTime(day, seconds);
                         System.out.println("Update DB timers (nº of queries " + DataBase.numberOfDataBaseQuerys + ")");
+
+                        DataBase.loadOrders();
                     }
 
                     Time.setText("Day: " + day + " (" + seconds + "s)");
@@ -89,14 +91,11 @@ public class GuiController implements Initializable {
 
                     if(orders!=null){
                         for(Order order : orders){
-                            //OrdersList.getItems().add(order.toString());
                             addStringToListView(OrdersList, order.toString());
                         }
                     }
 
                     /* MPS Processing */
-
-
 
                     List<PurchasingOrder> PurchasingOrders = MPS.getPurchasingOrders();
                     PurchasingPlan.getItems().clear();
@@ -192,6 +191,7 @@ public class GuiController implements Initializable {
     private void clearInformation() {
         // Implement the logic to clear all information
         System.out.println("deleteMPS");
+        DataBase.deleteOrders();
         DataBase.deleteMPS();
         DataBase.insertTime(0,0);
     }

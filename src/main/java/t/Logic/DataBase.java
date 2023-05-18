@@ -34,6 +34,62 @@ public class DataBase {
         }
     }
 
+    public static void loadOrders(){
+        numberOfDataBaseQuerys++;
+        String query  = "SELECT * FROM infi.orders";
+        // Connect to the DBMS (DataBase Management Server)
+        try(Connection conn = DriverManager.getConnection(db_url, db_user, passwd);
+            // Execute an SQL statement
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);) {
+            // Analyse the resulting data
+            while (rs.next()) {
+                System.out.println("Name: " + rs.getString("name"));
+                System.out.println("OrderNumber: "          + rs.getInt("number"));
+                System.out.println("WorkPiece: " + rs.getString("workpiece"));
+                System.out.println("Quantity: "      + rs.getString("quantity"));
+                System.out.println("DueDate: "      + rs.getString("duedate"));
+                System.out.println("EarlyPen: "      + rs.getString("earlypen"));
+                System.out.println("LatePen: "      + rs.getString("latepen"));
+                System.out.println("state: "      + rs.getString("state"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<Order> loadAllOrders() {
+        numberOfDataBaseQuerys++;
+        String query = "SELECT * FROM infi.orders";
+        List<Order> orders = new ArrayList<>();
+
+        try (Connection conn = DriverManager.getConnection(db_url, db_user, passwd);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            // Analyze the resulting data
+            while (rs.next()) {
+                String name = rs.getString("name");
+                String orderNumber = rs.getString("number");
+                String workPiece = rs.getString("workpiece");
+                String quantity = rs.getString("quantity");
+                String dueDate = rs.getString("duedate");
+                String earlyPen = rs.getString("earlypen");
+                String latePen = rs.getString("latepen");
+                String state = rs.getString("state");
+
+                Order order = new Order(name, orderNumber, workPiece, quantity, dueDate, latePen, earlyPen, state);
+                orders.add(order);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return orders;
+    }
+
+
     public static int insertOrder(String name, String Number, String WP, String Quantity, String DueDate, String EP, String LP, String state){
         numberOfDataBaseQuerys++;
         // Connect to the DBMS (DataBase Management Server)
@@ -52,6 +108,21 @@ public class DataBase {
         }
 
         return 1;
+    }
+
+    public static void deleteOrders() {
+        // DELETE FROM table_name;
+        numberOfDataBaseQuerys++;
+        String query = "DELETE FROM infi.orders;";
+        try (Connection conn = DriverManager.getConnection(db_url, db_user, passwd);) {
+
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static int updateOrder(String Number, boolean done){
@@ -88,7 +159,8 @@ public class DataBase {
             ResultSet rs = stmt.executeQuery(query);) {
             // Analyse the resulting data
             while (rs.next()) {
-                orders.add(new Order(rs.getString("number"),
+                orders.add(new Order(rs.getString("name"),
+                        rs.getString("number"),
                         rs.getString("workpiece"),
                         rs.getString("quantity"),
                         rs.getString("duedate"),

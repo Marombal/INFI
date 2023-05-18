@@ -49,7 +49,8 @@ public class MPS extends Thread{
     public void SetupMPS(){
 
         int[][] data = DataBase.selectAllDays();
-        //List<int[]> allDaysData = DataBase.selectAllDays2();
+        orders = DataBase.loadAllOrders();
+
 
         for (int i = 0; i < 100; i++) {
             daysClass[i] = new Day(i);

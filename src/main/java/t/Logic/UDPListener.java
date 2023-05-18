@@ -66,7 +66,17 @@ public class UDPListener extends Thread{
                     // Get a list of all elements in the document
                     NodeList nodeList = doc.getDocumentElement().getChildNodes();
 
+                    // Get the root element of the document
+                    Element rootElement = doc.getDocumentElement();
 
+                    // Get the value of the "NameId" attribute from the root element
+                    String clientNameId = rootElement.getAttribute("NameId");
+
+                    // Print the client name
+                    //System.out.println("Client Name: " + clientNameId);
+
+                    // Get a list of all elements in the document
+                    // NodeList nodeList = rootElement.getChildNodes();
 
                     NodeList orderNodes = doc.getElementsByTagName("Order");
                     int numOrders = orderNodes.getLength();
@@ -87,11 +97,10 @@ public class UDPListener extends Thread{
                             String latePen = orderElement.getAttribute("LatePen");
                             String earlyPen = orderElement.getAttribute("EarlyPen");
 
-                            order[i] = new Order(number, workPiece, quantity, dueDate, latePen, earlyPen, "WAITING");
-
-                            //order[i].InsertOrderInDB();
+                            order[i] = new Order(clientNameId, number, workPiece, quantity, dueDate, latePen, earlyPen, "WAITING");
 
                             MPS.addOrder(order[i]);
+                            order[i].InsertOrderInDB();
 
                             //MPS.updateMPS3(order[i]);
                             MPS.updateMPS4(order[i]); MPS.print10days();//MPS.print20daysMES();//MPS.print20days();
