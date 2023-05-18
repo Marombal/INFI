@@ -154,56 +154,6 @@ public class MPS extends Thread{
     static List<PurchasingOrder> purchasingOrders = new ArrayList<>();
 
     static List<DeliveringOrder> deliveringOrders = new ArrayList<>();
-    public static void updateMPS(){
-        if(orders == null) return;
-
-        // Check if the is any "Processing" Order
-        if(ProcessingOrder != null){
-            //
-        }
-
-        else{
-            // Choose the Order with the nearest DueDate
-            int LastDueDate = 100000;
-            for(Order order : orders){
-                if(Integer.parseInt(order.getDueDate()) < LastDueDate){
-                    ProcessingOrder = order;
-                    LastDueDate = Integer.parseInt(ProcessingOrder.getDueDate());
-                }
-            }
-        }
-
-        DaysToCompleteTransformation = Integer.parseInt(ProcessingOrder.getDueDate()) - Today;
-
-        if (Integer.parseInt(ProcessingOrder.getQuantity()) < 4) {
-            NumberOfDeliveringDays = 1;
-        } else {
-            NumberOfDeliveringDays = ((Integer.parseInt(ProcessingOrder.getQuantity()) - 1) / 4) + 1;
-        }
-
-        days.clear();
-        for(int i = Today; i < Integer.parseInt(ProcessingOrder.getDueDate()); i++){
-            days.add(i);
-        }
-
-        delivering_days.clear();
-        for(int i = Integer.parseInt(ProcessingOrder.getDueDate()); i > Integer.parseInt(ProcessingOrder.getDueDate()) + 1 - NumberOfDeliveringDays; i--){
-            delivering_days.add(i);
-        }
-    }
-
-    public static void updateMPS2(){
-        if(orders == null) return;
-
-        sortOrdersByDueDate();
-        setDelivering_days();
-
-        System.out.println("\n\n\n");
-        for (Order order : orders_ordered) {
-            order.printOrder();
-            order.printDeliveries();
-        }
-    }
 
     public static void updateMPS3 (Order order){
         // This function will process one and only one order
@@ -283,7 +233,7 @@ public class MPS extends Thread{
 
         daysClass[delivering_day].addDelivering(delivering_quantity, delivering_piece);
 
-        DeliveringOrder deliveringOrder1 = new DeliveringOrder(delivering_day, delivering_piece, quantity, OrderTest.getOrderNumber());
+        DeliveringOrder deliveringOrder1 = new DeliveringOrder(delivering_day, delivering_piece, quantity, OrderTest.getOrderNumber(), OrderTest.getClient());
         deliveringOrders.add(deliveringOrder1);
 
         // Production Plan
@@ -617,41 +567,9 @@ public class MPS extends Thread{
     }
 
 
-    public static List<Integer> d_days_list = new ArrayList<Integer>();
-    public static int d_days;
-    private static void setDelivering_days(){
-        for (Order order : orders_ordered) {
-            if (Integer.parseInt(order.getQuantity()) < 4) {
-                d_days = 1;
-            } else {
-                d_days = ((Integer.parseInt(order.getQuantity()) - 1) / 4) + 1;
-            }
-
-            d_days_list.clear();
-            order.removeDeliveries();
-
-            int left_quantity = Integer.parseInt(order.getQuantity());
-            int daily_quantity;
-            for(int i = Integer.parseInt(order.getDueDate()); i > Integer.parseInt(order.getDueDate()) - d_days; i--){
-                d_days_list.add(i);
-
-                daily_quantity = Math.min(left_quantity, 4);
-
-                left_quantity -= daily_quantity;
-
-                Deliver deliver = new Deliver(Integer.toString(i), Integer.toString(daily_quantity));
-
-                order.addDeliver(deliver);
-            }
-
-
-        }
-    }
-
     public static int num_purchasing(int num) {
         return (num + 3) / 4;
     }
-
 
 
     public static int calculateNumberOfPeriods(int taskTimeInSeconds, int numTasks) {

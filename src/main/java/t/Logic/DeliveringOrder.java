@@ -15,4 +15,12 @@ public class DeliveringOrder {
         this.Quantity = q;
         this.OrderNumber = n;
     }
+
+    DeliveringOrder(int d, String wp, int q, String n, String client){
+        this.Day = d;
+        this.WorkPiece = wp;
+        this.Quantity = q;
+        this.OrderNumber = n;
+        this.Client = client;
+    }
 }
