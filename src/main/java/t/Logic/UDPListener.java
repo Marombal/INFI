@@ -23,7 +23,7 @@ public class UDPListener extends Thread{
 
         try {
             // Create a new DatagramSocket to receive UDP packets
-            socket = new DatagramSocket(54321);
+            socket = new DatagramSocket(4321, null);
 
             // Create a new byte array to store incoming packet data
             byte[] buffer = new byte[1024 * 2];
