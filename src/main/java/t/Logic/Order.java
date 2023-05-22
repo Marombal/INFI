@@ -333,4 +333,8 @@ public class Order {
         return Rc() + Dc() + Pc();
     }
 
+    public float TotalCost(){
+        return Tc() * Integer.parseInt(Quantity) - (RealDueDate - StartDate) * Integer.parseInt(LatePen);
+    }
+
 }

@@ -145,10 +145,12 @@ public class GuiController implements Initializable {
                     // List<Order> orders = MPS.getOrders();
                     Costs.getItems().clear();
                     for(Order order : orders){
-                        Costs.getItems().add("Order Number: " + order.getOrderNumber() +
-                                " Pc = " + order.Pc() +
-                                " Dc = " + order.Dc() +
-                                " Tc = " + order.Tc());
+                        if(order.getRealDueDate() <= day){
+                            Costs.getItems().add("Order Number: " + order.getOrderNumber() +
+                                    " Average Piece Cost: " + order.Tc() +
+                                    " Total Order Cost = " + order.TotalCost());
+                        }
+
                     }
                 })
         );
