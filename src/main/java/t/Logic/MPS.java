@@ -36,9 +36,6 @@ public class MPS extends Thread{
     public void run(){
         while(true){
             System.out.println("Updating MPS...");
-
-
-
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {}
@@ -52,6 +49,20 @@ public class MPS extends Thread{
         orders = DataBase.loadAllOrders();
         deliveringOrders = calculateDOrders();
         purchasingOrders = calculatePOrders();
+
+        List<MRP> mrptem = DataBase.selectMRP();
+        for (Order order : orders) {
+            String orderNumber = order.getOrderNumber();
+            List<MRP> associatedMRPs = new ArrayList<>();
+
+            for (MRP mrp : mrptem) {
+                if (mrp.getOrderNumber().equals(orderNumber)) {
+                    associatedMRPs.add(mrp);
+                }
+            }
+
+            order.mrpList = associatedMRPs;
+        }
 
 
         for (int i = 0; i < 100; i++) {
@@ -184,15 +195,12 @@ public class MPS extends Thread{
         return deliveringOrders;
     }
 
-    public static int DaysToCompleteTransformation;
-    public static int NumberOfDeliveringDays;
-
-    public static List<Integer> days = new ArrayList<Integer>();
-    public static List<Integer> delivering_days = new ArrayList<Integer>();
 
     static List<PurchasingOrder> purchasingOrders = new ArrayList<>();
 
     static List<DeliveringOrder> deliveringOrders = new ArrayList<>();
+
+    static List<ProductionOrder> productionOrders = new ArrayList<>();
 
     public static void updateMPS3 (Order order){
         // This function will process one and only one order
@@ -248,7 +256,7 @@ public class MPS extends Thread{
         int delivering_day = checkTime(order);
 
         order.setRealDueDate(delivering_day);
-        System.out.println("\n\nBSJADSABKJADBKJASDBJKADBJK     " + delivering_day);
+        //System.out.println("\n\nBSJADSABKJADBKJASDBJKADBJK     " + delivering_day);
 
         // This function will process one and only one order
         Order OrderTest = order;
@@ -275,6 +283,7 @@ public class MPS extends Thread{
         DeliveringOrder deliveringOrder1 = new DeliveringOrder(delivering_day, delivering_piece, quantity, OrderTest.getOrderNumber(), OrderTest.getClient());
         deliveringOrders.add(deliveringOrder1);
 
+
         // Production Plan
         /*
         * //Gets the number of simple transformations
@@ -284,6 +293,7 @@ public class MPS extends Thread{
         * Gets the number of days to produce
         * Allocate days based on quantity to produce
         * */
+        ProductionOrder productionOrder1 = new ProductionOrder(OrderTest.getClient(), OrderTest.getOrderNumber());
 
         int production_last_day = delivering_day - 1;
         int producing_quantity = quantity;
@@ -292,8 +302,15 @@ public class MPS extends Thread{
         int max = tasksIn60Seconds(production_time);
         String production_piece = OrderTest.getWorkPiece();
 
+
+        MRP mrp2 = new MRP(production_last_day + 1, producing_quantity, production_piece, OrderTest.getOrderNumber());
+        order.mrpList.add(mrp2);
+        DataBase.insertMRP(OrderTest.getOrderNumber(), production_piece, producing_quantity, production_last_day + 1);
+
         //int taken_days = allocate_days_to_production(production_last_day, producing_quantity, producing_days, max, production_piece);
         int order_last_day = allocate_days_to_production(production_last_day, producing_quantity, producing_days, max, production_piece);
+        productionOrder1.addTransformation(production_last_day, getNumberFromWorkPiece(production_piece), producing_quantity);
+
 
         /*
         * Se a peça produzida for P8, alocar também fazer P6
@@ -308,13 +325,12 @@ public class MPS extends Thread{
             production_time = estimatePieceTime(production_piece); // !!
             producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
 
-            //max = tasksIn60Seconds(production_time);
-
-            //int taken_days_aux = allocate_days_to_production(p_day, producing_quantity, producing_days, max, production_piece);
-
-            //taken_days += taken_days_aux;
+            MRP mrp3 = new MRP(p_day + 1, producing_quantity, production_piece, OrderTest.getOrderNumber());
+            order.mrpList.add(mrp3);
+            DataBase.insertMRP(OrderTest.getOrderNumber(), production_piece, producing_quantity, p_day + 1);
 
             order_last_day = allocate_days_to_production(p_day, producing_quantity, producing_days, max, production_piece);
+            productionOrder1.addTransformation(p_day, getNumberFromWorkPiece(production_piece), producing_quantity);
         }
 
         if(Objects.equals(production_piece, "P5")){
@@ -324,12 +340,12 @@ public class MPS extends Thread{
             production_time = estimatePieceTime(production_piece); // !!
             producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
 
-            // max = tasksIn60Seconds(production_time);
-
-            //int taken_days_aux = allocate_days_to_production(p_day, producing_quantity, producing_days, max, production_piece);
-            //taken_days += taken_days_aux;
+            MRP mrp4 = new MRP(p_day + 1, producing_quantity, production_piece, OrderTest.getOrderNumber());
+            order.mrpList.add(mrp4);
+            DataBase.insertMRP(OrderTest.getOrderNumber(), production_piece, producing_quantity, p_day + 1);
 
             order_last_day = allocate_days_to_production(p_day, producing_quantity, producing_days, max, production_piece);
+            productionOrder1.addTransformation(p_day, getNumberFromWorkPiece(production_piece), producing_quantity);
         }
 
         if(Objects.equals(production_piece, "P9")){
@@ -348,12 +364,13 @@ public class MPS extends Thread{
             production_time = estimatePieceTime(production_piece); // !!
             producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
 
-            //max = tasksIn60Seconds(production_time);
 
-            //int taken_days_aux = allocate_days_to_production(p_day, producing_quantity, producing_days, max, production_piece);
-            //taken_days += taken_days_aux;
+            MRP mrp5 = new MRP(p_day + 1, producing_quantity, production_piece, OrderTest.getOrderNumber());
+            order.mrpList.add(mrp5);
+            DataBase.insertMRP(OrderTest.getOrderNumber(), production_piece, producing_quantity, p_day + 1);
 
             order_last_day = allocate_days_to_production(p_day, producing_quantity, producing_days, max, production_piece);
+            productionOrder1.addTransformation(p_day, getNumberFromWorkPiece(production_piece), producing_quantity);
         }
 
         if(Objects.equals(production_piece, "P7")){
@@ -374,13 +391,18 @@ public class MPS extends Thread{
             production_time = estimatePieceTime(production_piece); // !!
             producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
 
-            //max = tasksIn60Seconds(production_time);
 
-            //int taken_days_aux = allocate_days_to_production(p_day, producing_quantity, producing_days, max, production_piece);
-            //taken_days += taken_days_aux;
+            MRP mrp6 = new MRP(p_day + 1, producing_quantity, production_piece, OrderTest.getOrderNumber());
+            order.mrpList.add(mrp6);
+            DataBase.insertMRP(OrderTest.getOrderNumber(), production_piece, producing_quantity, p_day + 1);
 
             order_last_day = allocate_days_to_production(p_day, producing_quantity, producing_days, max, production_piece);
+            productionOrder1.addTransformation(p_day, getNumberFromWorkPiece(production_piece), producing_quantity);
         }
+
+        productionOrders.add(productionOrder1);
+
+        System.out.println("\n\n\n\n");productionOrder1.printAllTransformations();System.out.println("\n\n\n\n");
 
         // Purchasing Plan
         /*
@@ -595,16 +617,30 @@ public class MPS extends Thread{
         return delivering_day;
     }
 
-    private static void sortOrdersByDueDate() {
-        // Use a lambda expression to define the ordering by due date
-        Comparator<Order> orderByDueDate = (o1, o2) -> Integer.compare(Integer.parseInt(o1.getDueDate()), Integer.parseInt(o2.getDueDate()));
+    private static int getNumberFromWorkPiece(String wp){
+        if(Objects.equals(wp, "P3")){
+            return 3;
+        }
+        else if(Objects.equals(wp, "P4")){
+            return 4;
+        }
+        else if(Objects.equals(wp, "P5")){
+            return 5;
+        }
+        else if(Objects.equals(wp, "P6")){
+            return 6;
+        }
+        else if(Objects.equals(wp, "P7")){
+            return 7;
+        }
+        else if(Objects.equals(wp, "P8")){
+            return 8;
+        }
+        else if(Objects.equals(wp, "P9")){
+            return 9;
+        }
 
-        // Sort the orders list by due date
-        orders.sort(orderByDueDate);
-
-        // Copy the sorted orders to the orders_ordered list
-        orders_ordered.clear();
-        orders_ordered.addAll(orders);
+        return 0;
     }
 
 

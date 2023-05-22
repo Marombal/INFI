@@ -45,6 +45,8 @@ public class GuiController implements Initializable {
 
     @FXML
     ListView ProductionPlan;
+    @FXML
+    ListView MRP;
 
     @FXML
     ListView Costs;
@@ -77,11 +79,10 @@ public class GuiController implements Initializable {
                     MPS.Seconds = seconds;
                     if (seconds % 10 == 0) {
                         // The value of 'seconds' is a multiple of 10
-                        // Add your desired code here
                         DataBase.insertTime(day, seconds);
                         System.out.println("Update DB timers (nº of queries " + DataBase.numberOfDataBaseQuerys + ")");
 
-                        DataBase.loadOrders();
+                        // DataBase.loadOrders();
                     }
 
                     Time.setText("Day: " + day + " (" + seconds + "s)");
@@ -125,6 +126,20 @@ public class GuiController implements Initializable {
                         Day currentDay = days[i];
                         // Do something with the currentDay object
                         ProductionPlan.getItems().add("Day: " + i + "-" + currentDay.production());
+                    }
+
+                    //List<Order> orders = MPS.getOrders();
+                    MRP.getItems().clear();
+                    if(orders!=null){
+                        for(Order order : orders){
+                            List<MRP> Mrp = order.mrpList;
+                            for(MRP mrp : Mrp){
+                                MRP.getItems().add("Day: " + mrp.getDay() +
+                                        " from order: " + mrp.getOrderNumber() +
+                                        " Quantity: " + mrp.getQuantity() +
+                                        " WorkPiece: " + mrp.getMaterialType());
+                            }
+                        }
                     }
 
                     // List<Order> orders = MPS.getOrders();
@@ -193,6 +208,7 @@ public class GuiController implements Initializable {
         System.out.println("deleteMPS");
         DataBase.deleteOrders();
         DataBase.deleteMPS();
+        DataBase.deleteMRP();
         DataBase.insertTime(0,0);
     }
 

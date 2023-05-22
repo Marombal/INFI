@@ -24,6 +24,8 @@ public class Order {
 
     private int Ad;
 
+    public List<MRP> mrpList = new ArrayList<>();
+
 
     Order(){}
 

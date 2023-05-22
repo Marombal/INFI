@@ -487,5 +487,70 @@ public class DataBase {
         return 0;
     }
 
+    public static int insertMRP(String number, String wp, int quantity, int day){
+        numberOfDataBaseQuerys++;
+        // Connect to the DBMS (DataBase Management Server)
+        String query  = "INSERT INTO \"infi\".\"MRP\" (number, wp, day, quantity) " + "VALUES ('"+ number + "', '" + wp + "', " + day + ", " + quantity + ");";
+
+        try(Connection conn = DriverManager.getConnection(db_url, db_user, passwd);) {
+
+            Statement stmt = conn.createStatement();
+            int res = stmt.executeUpdate(query);
+
+            if(res == 0 ) return 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+
+        return 1;
+    }
+
+    public static int deleteMRP() {
+        // DELETE FROM table_name;
+        numberOfDataBaseQuerys++;
+        String query = "DELETE FROM \"infi\".\"MRP\";";
+        try (Connection conn = DriverManager.getConnection(db_url, db_user, passwd);) {
+
+            Statement stmt = conn.createStatement();
+            int res = stmt.executeUpdate(query);
+
+            if (res == 0) return 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+
+        return 1;
+    }
+
+    public static List<MRP>  selectMRP(){
+        numberOfDataBaseQuerys++;
+        String query = "SELECT * FROM \"infi\".\"MRP\";";
+        List<MRP> mrp = new ArrayList<>();
+
+        try (Connection conn = DriverManager.getConnection(db_url, db_user, passwd);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            // Analyze the resulting data
+            while (rs.next()) {
+                String orderNumber = rs.getString("number");
+                String workPiece = rs.getString("wp");
+                int quantity = rs.getInt("quantity");
+                int day = rs.getInt("day");
+
+                MRP mrp1 = new MRP(day, quantity, workPiece, orderNumber);
+                mrp.add(mrp1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return mrp;
+    }
 
 }

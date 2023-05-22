@@ -59,7 +59,7 @@ public class Main extends Application {
         myTCPServer.start();
 
 
-        MPS.printOrders();
+        //MPS.printOrders();
 
         /* Launch GUI */
         launch();
@@ -99,6 +99,7 @@ public class Main extends Application {
         System.out.println("deleteMPS");
         DataBase.deleteMPS();
         DataBase.deleteOrders();
+        DataBase.deleteMRP();
         DataBase.insertTime(0,0);
     }
 
