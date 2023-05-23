@@ -610,6 +610,7 @@ public class MPS extends Thread{
 
             int purchase_deliver = order_last_day;
             finishing_day = purchase_deliver - 1;
+            finishing_day = purchase_deliver - 2;
             //delivering_day++;
         }
 

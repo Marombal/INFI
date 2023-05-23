@@ -9,7 +9,7 @@ public class TCPServer extends Thread{
     public void run() {
         try {
             // Create a server socket that listens on port 8080
-            ServerSocket serverSocket = new ServerSocket(8080);
+            ServerSocket serverSocket = new ServerSocket(9090);
 
             System.out.println("TCP Server listening on port 8080...");
             // Accept incoming connections from clients
