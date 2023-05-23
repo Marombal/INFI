@@ -67,7 +67,7 @@ public class GuiController implements Initializable {
 
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), event -> {
-                    seconds++;
+                    seconds++;//MPS.sendTodayMPS();
 
                     if(seconds > 59){
                         seconds = 0;
@@ -82,6 +82,7 @@ public class GuiController implements Initializable {
                         DataBase.insertTime(day, seconds);
                         System.out.println("Update DB timers (nº of queries " + DataBase.numberOfDataBaseQuerys + ")");
 
+                        //MPS.sendTodayMPS();
                         // DataBase.loadOrders();
                     }
 
