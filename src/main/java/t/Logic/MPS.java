@@ -301,10 +301,13 @@ public class MPS extends Thread{
 
         int production_last_day = delivering_day - 1;
         int producing_quantity = quantity;
-        int production_time = 25;
-        int producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
-        int max = tasksIn60Seconds(production_time);
         String production_piece = OrderTest.getWorkPiece();
+        int production_time = estimatePieceTime(production_piece);
+        int producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
+
+        int max = tasksIn60Seconds(production_time);
+        if(max > 2) max = 2;
+
 
 
         MRP mrp2 = new MRP(production_last_day + 1, producing_quantity, production_piece, OrderTest.getOrderNumber());
@@ -531,12 +534,12 @@ public class MPS extends Thread{
              * Allocate days based on quantity to produce
              * */
 
+            String production_piece = OrderTest.getWorkPiece();
             int production_last_day = delivering_day - 1;
             int producing_quantity = quantity;
-            int production_time = 25;
+            int production_time = estimatePieceTime(production_piece);
             int producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
             int max = tasksIn60Seconds(production_time);
-            String production_piece = OrderTest.getWorkPiece();
 
             int order_last_day = allocate_days_to_production_clone(production_last_day, producing_quantity, producing_days, max, production_piece, clonedDaysClass);
 
@@ -680,6 +683,7 @@ public class MPS extends Thread{
     public static int allocate_days_to_production(int start, int quantity, int days, int max, String wp){
         int i = 0;
         int count = 0;
+        System.out.println("OLAOLA: " + max);
         while(quantity > 0){
             if((daysClass[start - i].totalPiecesProduced() + max <= 4) && (daysClass[start - i].totalPiecesType(wp) < 2)){
                 if(quantity >= max) {
