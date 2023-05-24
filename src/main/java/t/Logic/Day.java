@@ -263,6 +263,10 @@ public class Day implements Cloneable{
         //countTypesProducing();
     }
 
+    public int totalDelivering(){
+        return deliverP3 + deliverP4 + deliverP5 + deliverP6 + deliverP7 + deliverP8 + deliverP9;
+    }
+
     public void addComingP1(int comingP1) {
         this.comingP1 += comingP1;
     }

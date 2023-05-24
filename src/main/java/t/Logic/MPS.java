@@ -275,6 +275,10 @@ public class MPS extends Thread{
         int delivering_quantity = quantity;                                     // 2.
         String delivering_piece = OrderTest.getWorkPiece();                     // 3.
 
+        while(daysClass[delivering_day].totalDelivering() + delivering_quantity > 8){
+            delivering_day++;
+        }
+
         daysClass[delivering_day].setDeliverQuantity(delivering_quantity);      // 4.
         daysClass[delivering_day].setDeliverPiece(delivering_piece);            // 4.
 
@@ -490,6 +494,7 @@ public class MPS extends Thread{
         Order OrderTest = order;
         int delivering_day = Integer.parseInt(OrderTest.getDueDate()) - 1;
 
+
         while(finishing_day <= Today){
 
             delivering_day++;
@@ -508,6 +513,10 @@ public class MPS extends Thread{
 
             int delivering_quantity = quantity;                                     // 2.
             String delivering_piece = OrderTest.getWorkPiece();                     // 3.
+
+            while(clonedDaysClass[delivering_day].totalDelivering() + delivering_quantity > 8){
+                delivering_day++;
+            }
 
             clonedDaysClass[delivering_day].setDeliverQuantity(delivering_quantity);      // 4.
             clonedDaysClass[delivering_day].setDeliverPiece(delivering_piece);            // 4.
@@ -672,7 +681,7 @@ public class MPS extends Thread{
         int i = 0;
         int count = 0;
         while(quantity > 0){
-            if((daysClass[start - i].totalPiecesProduced() + max <= 6) && (daysClass[start - i].totalPiecesType(wp) < 2)){
+            if((daysClass[start - i].totalPiecesProduced() + max <= 4) && (daysClass[start - i].totalPiecesType(wp) < 2)){
                 if(quantity >= max) {
                     daysClass[start - i].addProduction(max, wp);
                     quantity -= max;
@@ -700,7 +709,7 @@ public class MPS extends Thread{
                 return 0;
             }
 
-            if((Clone[start - i].totalPiecesProduced() + max <= 6) && (Clone[start - i].totalPiecesType(wp) < 2)){
+            if((Clone[start - i].totalPiecesProduced() + max <= 4) && (Clone[start - i].totalPiecesType(wp) < 2)){
                 if(quantity >= max) {
                     Clone[start - i].addProduction(max, wp);
                     quantity -= max;
