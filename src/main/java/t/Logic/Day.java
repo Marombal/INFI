@@ -398,8 +398,18 @@ public class Day implements Cloneable{
                 productionP3, productionP4, productionP5, productionP6, productionP7, productionP8, productionP9,
                 delivering_piece, deliverQuantity);
 
-        String generatedStringEz = String.format("D%dPU%d%dPR%d%d%d%d%d%d%dD%d%d%d%d%d%d%d",
-                day,
+        int day1 = 0, day0 = 0;
+        if(day < 10){
+            day0 = day;
+            day1 = 0;
+        }
+        else{
+            day0 = day%10;
+            day1 = (day - day%10)%10;
+        }
+
+        String generatedStringEz = String.format("D%d%dPU%d%dPR%d%d%d%d%d%d%dD%d%d%d%d%d%d%d",
+                day1, day0,
                 comingP1, comingP2,
                 productionP3, productionP4, productionP5, productionP6, productionP7, productionP8, productionP9,
                 deliverP3, deliverP4, deliverP5, deliverP6, deliverP7, deliverP8, deliverP9);

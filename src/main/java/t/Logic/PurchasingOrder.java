@@ -1,5 +1,7 @@
 package t.Logic;
 
+import java.util.Objects;
+
 public class PurchasingOrder {
     public String Supplier;
 
@@ -11,6 +13,13 @@ public class PurchasingOrder {
         this.Supplier = s;
         this.quantity = q;
         this.purchasing_day = p;
-        this.WorkPiece = wp;
+
+        if(Objects.equals(wp, "P3")) this.WorkPiece = "P2";
+        else if(Objects.equals(wp, "P4")) this.WorkPiece = "P2";
+        else if(Objects.equals(wp, "P5")) this.WorkPiece = "P2";
+        else if(Objects.equals(wp, "P6")) this.WorkPiece = "P1";
+        else if(Objects.equals(wp, "P7")) this.WorkPiece = "P2";
+        else if(Objects.equals(wp, "P8")) this.WorkPiece = "P1";
+        else if(Objects.equals(wp, "P9")) this.WorkPiece = "P2";
     }
 }

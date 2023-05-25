@@ -63,6 +63,7 @@ public class GuiController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         day = DataBase.getDay();
         seconds = DataBase.getSec();
+        MPS.Today = day;
 
 
         Timeline timeline = new Timeline(
