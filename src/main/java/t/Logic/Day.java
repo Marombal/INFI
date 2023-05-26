@@ -404,9 +404,11 @@ public class Day implements Cloneable{
             day1 = 0;
         }
         else{
-            day0 = day%10;
-            day1 = (day - day%10)%10;
+            day1 = day / 10; // Extracts the dozens
+            day0 = day % 10; // Extracts the units
         }
+
+        System.out.println("OLAOLAOLA" + day1 + day0);
 
         String generatedStringEz = String.format("D%d%dPU%d%dPR%d%d%d%d%d%d%dD%d%d%d%d%d%d%d",
                 day1, day0,
