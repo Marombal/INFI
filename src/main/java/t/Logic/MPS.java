@@ -409,7 +409,7 @@ public class MPS extends Thread{
 
         productionOrders.add(productionOrder1);
 
-        System.out.println("\n\n\n\n");productionOrder1.printAllTransformations();System.out.println("\n\n\n\n");
+        // System.out.println("\n\n\n\n");productionOrder1.printAllTransformations();System.out.println("\n\n\n\n");
 
         // Purchasing Plan
         /*
@@ -556,7 +556,7 @@ public class MPS extends Thread{
                 production_time = estimatePieceTime(production_piece); // !!
                 producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
 
-                order_last_day = allocate_days_to_production_clone(production_last_day, producing_quantity, producing_days, max, production_piece, clonedDaysClass);
+                order_last_day = allocate_days_to_production_clone(p_day, producing_quantity, producing_days, max, production_piece, clonedDaysClass);
             }
 
             if(Objects.equals(production_piece, "P5")){
@@ -566,7 +566,7 @@ public class MPS extends Thread{
                 production_time = estimatePieceTime(production_piece); // !!
                 producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
 
-                order_last_day = allocate_days_to_production_clone(production_last_day, producing_quantity, producing_days, max, production_piece, clonedDaysClass);
+                order_last_day = allocate_days_to_production_clone(p_day, producing_quantity, producing_days, max, production_piece, clonedDaysClass);
             }
 
             if(Objects.equals(production_piece, "P9")){
@@ -585,7 +585,7 @@ public class MPS extends Thread{
                 production_time = estimatePieceTime(production_piece); // !!
                 producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
 
-                order_last_day = allocate_days_to_production_clone(production_last_day, producing_quantity, producing_days, max, production_piece, clonedDaysClass);
+                order_last_day = allocate_days_to_production_clone(p_day, producing_quantity, producing_days, max, production_piece, clonedDaysClass);
             }
 
             if(Objects.equals(production_piece, "P7")){
@@ -606,7 +606,7 @@ public class MPS extends Thread{
                 production_time = estimatePieceTime(production_piece); // !!
                 producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
 
-                order_last_day = allocate_days_to_production_clone(production_last_day, producing_quantity, producing_days, max, production_piece, clonedDaysClass);
+                order_last_day = allocate_days_to_production_clone(p_day, producing_quantity, producing_days, max, production_piece, clonedDaysClass);
             }
 
 
@@ -622,9 +622,9 @@ public class MPS extends Thread{
 
             int purchase_deliver = order_last_day;
             finishing_day = purchase_deliver - 1;
-            finishing_day = purchase_deliver - 2;
-            //delivering_day++;
-            System.out.println("\n\n\n\nFINISHING DAY: " + finishing_day + "starting day:" + delivering_day + "\n\n\n");
+
+
+            System.out.println("\nFINISHING DAY: " + finishing_day + "starting day:" + delivering_day + "\n");
         }
 
 
@@ -684,7 +684,7 @@ public class MPS extends Thread{
     public static int allocate_days_to_production(int start, int quantity, int days, int max, String wp){
         int i = 0;
         int count = 0;
-        System.out.println("OLAOLA: " + max);
+        //System.out.println("OLAOLA: " + max);
         while(quantity > 0){
             if((daysClass[start - i].totalPiecesProduced() + max <= 4) && (daysClass[start - i].totalPiecesType(wp) < 2)){
                 if(quantity >= max) {
@@ -700,7 +700,7 @@ public class MPS extends Thread{
             i++;
         }
 
-        System.out.println("AQUI: \n\n\n" + (start - i));
+        System.out.println("AQUI: \n" + (start - i));
         //return count;
         return start - i;
     }
@@ -728,7 +728,7 @@ public class MPS extends Thread{
             i++;
         }
 
-
+        System.out.println("---"+(start-i));
         //return count;
         return start - i;
     }
