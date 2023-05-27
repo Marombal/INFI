@@ -306,7 +306,7 @@ public class MPS extends Thread{
         int producing_days = calculateNumberOfPeriods(production_time, producing_quantity);
 
         int max = tasksIn60Seconds(production_time);
-        if(max > 2) max = 2;
+        //if(max > 2) max = 2;
 
 
 
@@ -498,7 +498,7 @@ public class MPS extends Thread{
         int delivering_day = Integer.parseInt(OrderTest.getDueDate()) - 1;
 
 
-        while(finishing_day <= Today){
+        while(finishing_day <= Today || (finishing_day <= 0)){
 
             delivering_day++;
             Day[] clonedDaysClass = cloneDaysClass();
@@ -609,6 +609,8 @@ public class MPS extends Thread{
                 order_last_day = allocate_days_to_production_clone(p_day, producing_quantity, producing_days, max, production_piece, clonedDaysClass);
             }
 
+            System.out.println(order_last_day + ":");
+
 
             // Purchasing Plan
             /*
@@ -624,7 +626,7 @@ public class MPS extends Thread{
             finishing_day = purchase_deliver - 1;
 
 
-            System.out.println("\nFINISHING DAY: " + finishing_day + "starting day:" + delivering_day + "\n");
+            System.out.println("FINISHING DAY: " + finishing_day + " starting day:" + delivering_day);
         }
 
 
@@ -684,8 +686,12 @@ public class MPS extends Thread{
     public static int allocate_days_to_production(int start, int quantity, int days, int max, String wp){
         int i = 0;
         int count = 0;
-        //System.out.println("OLAOLA: " + max);
         while(quantity > 0){
+
+            if(start - i <= 0){
+                return 0;
+            }
+
             if((daysClass[start - i].totalPiecesProduced() + max <= 4) && (daysClass[start - i].totalPiecesType(wp) < 2)){
                 if(quantity >= max) {
                     daysClass[start - i].addProduction(max, wp);
@@ -700,8 +706,6 @@ public class MPS extends Thread{
             i++;
         }
 
-        System.out.println("AQUI: \n" + (start - i));
-        //return count;
         return start - i;
     }
 
@@ -709,7 +713,7 @@ public class MPS extends Thread{
         int i = 0;
         int count = 0;
         while(quantity > 0){
-
+            System.out.println("quant. " + quantity + " " + max);
             if(start - i <= 0){
                 return 0;
             }
@@ -728,7 +732,7 @@ public class MPS extends Thread{
             i++;
         }
 
-        System.out.println("---"+(start-i));
+        System.out.println("-> "+(start-i));
         //return count;
         return start - i;
     }
