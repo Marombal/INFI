@@ -26,6 +26,7 @@ public class Order {
 
     public List<MRP> mrpList = new ArrayList<>();
 
+    public int TotalTimeInProduction = 0;
 
     Order(){}
 
@@ -313,7 +314,7 @@ public class Order {
         else{
             Rc = Integer.parseInt(Quantity) * 18;
         }
-
+        System.out.println("RC-" + Rc);
         return Rc;
     }
 
@@ -321,20 +322,22 @@ public class Order {
         float Dc;
 
         Dc = (float) (Rc() * (RealDueDate - StartDate) * 0.01);
-
+        System.out.println("DC-" + Dc);
         return Dc;
     }
 
     public float Pc(){
-        return 0;
+        System.out.println("PC-" + (float)TotalTimeInProduction / (float)Integer.parseInt(Quantity) + " tt " + TotalTimeInProduction + " q ");
+        return (float)TotalTimeInProduction / (float)Integer.parseInt(Quantity);
     }
 
     public float Tc(){
+        System.out.println("Tc-"+(Rc()+Dc()+Pc()));
         return Rc() + Dc() + Pc();
     }
 
     public float TotalCost(){
-        return Tc() * Integer.parseInt(Quantity) - (RealDueDate - StartDate) * Integer.parseInt(LatePen);
+        return Tc() * Integer.parseInt(Quantity) + (RealDueDate - StartDate) * Integer.parseInt(LatePen);
     }
 
 }

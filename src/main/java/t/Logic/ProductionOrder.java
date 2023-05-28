@@ -22,35 +22,41 @@ public class ProductionOrder {
         productionPlan.computeIfAbsent(day, k -> new HashMap<>()).put(transformation, quantity);
     }
 
-    public void accessTransformation(int day) {
-        Map<Integer, Integer> transformations = productionPlan.get(day);
-        if (transformations != null) {
-            // Process the transformations for the day
-            for (Map.Entry<Integer, Integer> entry : transformations.entrySet()) {
-                int transformation = entry.getKey();
-                int quantity = entry.getValue();
-
-                // Check if the transformation is related to the order
-                if (quantity > 0) {
-                    // Update the total time for the order
-                    int timeTaken = calculateTimeTaken(quantity);
-                    updateTotalTime(timeTaken);
-                }
-            }
+    public int checkDayExists(int day) {
+        if (productionPlan.containsKey(day)) {
+            return 1; // Day exists in the production plan
+        } else {
+            return 0; // Day does not exist in the production plan
         }
     }
 
-    private int calculateTimeTaken(int quantity) {
-        // Implement your logic here to calculate the time taken for the given quantity
-        // You can define your own calculation based on your requirements
-        // Return the calculated time taken
-        return 0;
+    public int checkDayTransformationExists(int day, int transformation) {
+        Map<Integer, Integer> transformations = productionPlan.get(day);
+        if (transformations != null && transformations.containsKey(transformation)) {
+            return 1; // Day and transformation exist in the production plan
+        } else {
+            return 0; // Day or transformation does not exist in the production plan
+        }
     }
 
-    private void updateTotalTime(int timeTaken) {
-        // Update the total time for the order
-        totalTime += timeTaken;
+    public int getTimeForDayTransformation(int day, int transformation, int time) {
+        Map<Integer, Integer> transformations = productionPlan.get(day);
+        if (transformations != null && transformations.containsKey(transformation)) {
+            int quantity = transformations.get(transformation);
+            if (quantity > 0) {
+                totalTime+=time;
+                System.out.println("totaltime+ "+totalTime);
+                return time / quantity; // Return the calculated time divided by quantity
+            } else {
+                return 0; // Return 0 if quantity is 0
+            }
+        } else {
+            System.out.println("PR Nao existe");
+            return 0; // Return 0 if day or transformation does not exist in the production plan
+        }
     }
+
+
     public void printAllTransformations() {
         for (Map.Entry<Integer, Map<Integer, Integer>> dayEntry : productionPlan.entrySet()) {
             int day = dayEntry.getKey();
@@ -66,6 +72,8 @@ public class ProductionOrder {
             System.out.println(); // Add a blank line for separation
         }
     }
+
+
 
 
     public void parseMessage(String message) {

@@ -609,7 +609,7 @@ public class MPS extends Thread{
                 order_last_day = allocate_days_to_production_clone(p_day, producing_quantity, producing_days, max, production_piece, clonedDaysClass);
             }
 
-            System.out.println(order_last_day + ":");
+            //System.out.println(order_last_day + ":");
 
 
             // Purchasing Plan
@@ -626,7 +626,7 @@ public class MPS extends Thread{
             finishing_day = purchase_deliver - 1;
 
 
-            System.out.println("FINISHING DAY: " + finishing_day + " starting day:" + delivering_day);
+            //System.out.println("FINISHING DAY: " + finishing_day + " starting day:" + delivering_day);
         }
 
 
@@ -713,7 +713,7 @@ public class MPS extends Thread{
         int i = 0;
         int count = 0;
         while(quantity > 0){
-            System.out.println("quant. " + quantity + " " + max);
+            //System.out.println("quant. " + quantity + " " + max);
             if(start - i <= 0){
                 return 0;
             }
@@ -732,7 +732,7 @@ public class MPS extends Thread{
             i++;
         }
 
-        System.out.println("-> "+(start-i));
+        //System.out.println("-> "+(start-i));
         //return count;
         return start - i;
     }
@@ -819,7 +819,21 @@ public class MPS extends Thread{
                     daysClass[i].getProductionP3(), daysClass[i].getProductionP4(), daysClass[i].getProductionP5(), daysClass[i].getProductionP6(), daysClass[i].getProductionP7(), daysClass[i].getProductionP8(), daysClass[i].getProductionP9(),
                     daysClass[i].getDeliverP3(), daysClass[i].getDeliverP4(), daysClass[i].getDeliverP5(), daysClass[i].getDeliverP6(), daysClass[i].getDeliverP7(), daysClass[i].getDeliverP8(), daysClass[i].getDeliverP9());
         }
-
     }
 
+    public static void UpdateProductionPlan(int day, int transformation, int time){
+        for(ProductionOrder p : productionOrders){
+            p.getTimeForDayTransformation(day, transformation, time);
+        }
+
+        for(Order order : orders){
+            String OrderNumber = order.getOrderNumber();
+            for(ProductionOrder p : productionOrders){
+                if (Objects.equals(OrderNumber, p.OrderNumber)){
+                    System.out.println("LEL-" + p.totalTime);
+                    order.TotalTimeInProduction += p.totalTime;
+                }
+            }
+        }
+    }
 }
