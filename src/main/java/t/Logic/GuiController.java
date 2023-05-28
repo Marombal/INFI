@@ -147,7 +147,7 @@ public class GuiController implements Initializable {
                     // List<Order> orders = MPS.getOrders();
                     Costs.getItems().clear();
                     for(Order order : orders){
-                        if(order.getRealDueDate() <= day){
+                        if(order.getRealDueDate() <= 10){
                             Costs.getItems().add("Order Number: " + order.getOrderNumber() +
                                     " Average Piece Cost: " + order.Tc() +
                                     " Total Order Cost = " + order.TotalCost());

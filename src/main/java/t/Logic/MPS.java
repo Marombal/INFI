@@ -830,8 +830,9 @@ public class MPS extends Thread{
             String OrderNumber = order.getOrderNumber();
             for(ProductionOrder p : productionOrders){
                 if (Objects.equals(OrderNumber, p.OrderNumber)){
-                    System.out.println("LEL-" + p.totalTime);
-                    order.TotalTimeInProduction += p.totalTime;
+                    //p.getTimeForDayTransformation(day, transformation, time);
+                    //order.TotalTimeInProduction += p.totalTime;
+                    order.TotalTimeInProduction += p.getTimeForDayTransformation2(day, transformation, time);
                 }
             }
         }

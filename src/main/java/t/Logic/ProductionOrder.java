@@ -56,6 +56,21 @@ public class ProductionOrder {
         }
     }
 
+    public int getTimeForDayTransformation2(int day, int transformation, int time) {
+        Map<Integer, Integer> transformations = productionPlan.get(day);
+        if (transformations != null && transformations.containsKey(transformation)) {
+            int quantity = transformations.get(transformation);
+            if (quantity > 0) {
+                return time; // Return the calculated time divided by quantity
+            } else {
+                return 0; // Return 0 if quantity is 0
+            }
+        } else {
+            System.out.println("PR Nao existe");
+            return 0; // Return 0 if day or transformation does not exist in the production plan
+        }
+    }
+
 
     public void printAllTransformations() {
         for (Map.Entry<Integer, Map<Integer, Integer>> dayEntry : productionPlan.entrySet()) {
