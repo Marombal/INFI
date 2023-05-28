@@ -626,7 +626,7 @@ public class MPS extends Thread{
             finishing_day = purchase_deliver - 1;
 
 
-            //System.out.println("FINISHING DAY: " + finishing_day + " starting day:" + delivering_day);
+            System.out.println("FINISHING DAY: " + finishing_day + " starting day:" + delivering_day);
         }
 
 
@@ -692,7 +692,7 @@ public class MPS extends Thread{
                 return 0;
             }
 
-            if((daysClass[start - i].totalPiecesProduced() + max <= 4) && (daysClass[start - i].totalPiecesType(wp) < 2)){
+            if((daysClass[start - i].totalPiecesProduced() + max <= 4) && (daysClass[start - i].totalPiecesType(wp) < 3)  ){
                 if(quantity >= max) {
                     daysClass[start - i].addProduction(max, wp);
                     quantity -= max;
@@ -718,7 +718,8 @@ public class MPS extends Thread{
                 return 0;
             }
 
-            if((Clone[start - i].totalPiecesProduced() + max <= 4) && (Clone[start - i].totalPiecesType(wp) < 3)){
+            System.out.println(".." + (daysClass[start - i].P8(wp, quantity)));
+            if((Clone[start - i].totalPiecesProduced() + max <= 4) && (Clone[start - i].totalPiecesType(wp) < 3) ){
                 if(quantity >= max) {
                     Clone[start - i].addProduction(max, wp);
                     quantity -= max;
@@ -732,7 +733,7 @@ public class MPS extends Thread{
             i++;
         }
 
-        //System.out.println("-> "+(start-i));
+        System.out.println("-> " + (start-i) + "   " + wp);
         //return count;
         return start - i;
     }

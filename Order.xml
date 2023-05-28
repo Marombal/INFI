@@ -1,4 +1,4 @@
 <Client NameId="Miguel">
-<Order Number="003" WorkPiece="P6" Quantity="1" DueDate="1"
+<Order Number="003" WorkPiece="P8" Quantity="5" DueDate="1"
        LatePen="10" EarlyPen="02"> </Order>
 </Client>

@@ -433,6 +433,11 @@ public class Day implements Cloneable{
         return (productionP3 + productionP4 + productionP5 + productionP6 + productionP7 + productionP8 + productionP9);
     }
 
+    public int P8(String wp, int q){
+        if(!Objects.equals(wp, "P8")) return productionP8;
+        else return productionP8 + q;
+    }
+
     public int totalPiecesType(String WorkPiece){
         if(Objects.equals("P3", WorkPiece)){
             return productionP3;
