@@ -19,7 +19,7 @@ public class UDPListener extends Thread{
         DatagramSocket socket = null;
         DatagramPacket packet = null;
 
-        System.out.println("ERP here, waiting orders via UDP (port: 54321)... ");
+        System.out.println("ERP here, waiting orders via UDP (port: 4321)... ");
 
         try {
             // Create a new DatagramSocket to receive UDP packets

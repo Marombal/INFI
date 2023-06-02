@@ -7,8 +7,8 @@ public class TCPSender {
     public static void sendString(String message) {
         try {
             // Create a socket to connect to the same machine on port 8080
-            Socket socket = new Socket("localhost", 8080);
-            //Socket socket = new Socket("10.227.157.35", 8080);
+            //Socket socket = new Socket("localhost", 8080);
+            Socket socket = new Socket("10.227.157.141", 8080);
 
             // Get the output stream of the socket
             OutputStream outputStream = socket.getOutputStream();
